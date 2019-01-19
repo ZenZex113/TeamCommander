@@ -155,12 +155,13 @@
         android:layout_marginEnd="10dp"
         android:id="@+id/name_edit_layout"
         android:text="TextView"
+        app:errorEnabled="true"
         android:textSize="14sp">
 
         <android.support.design.widget.TextInputEditText
+            android:id="@+id/name_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/name_edit"
             android:hint="Название" />
     </android.support.design.widget.TextInputLayout>
 
@@ -172,26 +173,6 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="10dp"
         android:text="TextView" />
-
-    <!--<EditText
-        android:id="@+id/time_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/time"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="10dp"
-        android:ems="10"
-        android:inputType="time" />
-
-    <EditText
-        android:id="@+id/date_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/date"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="10dp"
-        android:ems="10"
-        android:inputType="date" />-->
 
     <ImageButton android:id="@+id/timeButton"
         android:layout_width="wrap_content"

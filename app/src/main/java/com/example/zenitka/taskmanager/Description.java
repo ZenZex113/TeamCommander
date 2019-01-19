@@ -17,11 +17,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import java.util.Calendar;
-import java.util.Objects;
-import java.util.UUID;
 
 public class Description extends AppCompatActivity {
 

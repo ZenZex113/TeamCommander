@@ -1,11 +1,13 @@
 package com.example.zenitka.taskmanager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
@@ -36,8 +38,8 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DataAdapter.ViewHolder holder, int position) {
-        Task task = tasks.get(position);
+    public void onBindViewHolder(@NonNull DataAdapter.ViewHolder holder, final int position) {
+        final Task task = tasks.get(position);
         holder.name.setText(task.name);
         holder.date.setText(task.date);
     }

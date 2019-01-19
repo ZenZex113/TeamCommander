@@ -48,7 +48,6 @@ public class Task implements Parcelable {
         this.UID = task.UID;
     }
 
-
     protected Task(Parcel in) {
         UID = in.readInt();
         name = in.readString();

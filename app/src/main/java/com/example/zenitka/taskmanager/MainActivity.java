@@ -16,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -79,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements DataAdapter.ItemC
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
@@ -158,7 +158,8 @@ public class MainActivity extends AppCompatActivity implements DataAdapter.ItemC
                 adapter.setTasks(tasks);
             }
         });
-
+    }
+    public void onDeleteClick () {
     }
 }
 
