@@ -159,13 +159,13 @@ public class Description extends AppCompatActivity {
             else
                 task.status = 0;
             if(priority_low.isChecked())
-                task.status = 1;
+                task.priority = 1;
             else if(priority_medium.isChecked())
-                task.status = 2;
+                task.priority = 2;
             else if(priority_high.isChecked())
-                task.status = 3;
+                task.priority = 3;
             else
-                task.status = 0;
+                task.priority = 0;
 
             if(TextUtils.isEmpty(name_edit.getText())) {
                 setResult(RESULT_CANCELED, intent);

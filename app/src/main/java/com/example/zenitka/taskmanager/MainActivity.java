@@ -1,12 +1,9 @@
 package com.example.zenitka.taskmanager;
 
-import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.arch.persistence.room.RoomDatabase;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -96,7 +93,8 @@ public class MainActivity extends AppCompatActivity implements DataAdapter.ItemC
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_login) {
-
+            Intent lintent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(lintent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
