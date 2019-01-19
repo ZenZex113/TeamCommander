@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements DataAdapter.ItemC
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_login) {
 
         }
 
