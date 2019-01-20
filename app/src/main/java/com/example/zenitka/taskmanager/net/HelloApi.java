@@ -1,6 +1,7 @@
 package com.example.zenitka.taskmanager.net;
 
-import com.example.zenitka.taskmanager.User;
+
+import com.example.zenitka.taskmanager.Team_.User;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
