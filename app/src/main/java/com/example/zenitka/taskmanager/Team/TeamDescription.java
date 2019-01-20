@@ -1,8 +1,10 @@
-package com.example.zenitka.taskmanager;
+package com.example.zenitka.taskmanager.Team;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.zenitka.taskmanager.R;
 
 public class TeamDescription extends AppCompatActivity {
 

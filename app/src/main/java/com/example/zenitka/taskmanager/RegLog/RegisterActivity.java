@@ -1,9 +1,11 @@
-package com.example.zenitka.taskmanager;
+package com.example.zenitka.taskmanager.RegLog;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.zenitka.taskmanager.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -14,7 +16,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void onRegisterBackClick(View view) {
-        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-        startActivity(intent);
+        finish();
     }
 }

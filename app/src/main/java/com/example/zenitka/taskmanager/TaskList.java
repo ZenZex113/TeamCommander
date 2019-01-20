@@ -18,11 +18,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.zenitka.taskmanager.RegLog.LoginActivity;
+import com.example.zenitka.taskmanager.Team.TeamList;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemClickListener, NavigationView.OnNavigationItemSelectedListener{
+public class TaskList extends AppCompatActivity implements TaskAdapter.ItemClickListener, NavigationView.OnNavigationItemSelectedListener{
     List<Task> tasks = new ArrayList<>();
     TaskAdapter adapter;
 
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Description.class);
+                Intent intent = new Intent(TaskList.this, TaskDescription.class);
                 intent.putExtra("requestcode", "insert");
                 startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
             }
@@ -84,10 +87,10 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
         int id = item.getItemId();
 
         if (id == R.id.nav_list_of_tasks) {
-            Intent lintent = new Intent(MainActivity.this, MainActivity.class);
+            Intent lintent = new Intent(TaskList.this, TaskList.class);
             startActivity(lintent);
         } else if (id == R.id.nav_list_of_teams) {
-            Intent lintent = new Intent(MainActivity.this, TeamList.class);
+            Intent lintent = new Intent(TaskList.this, TeamList.class);
             startActivity(lintent);
 
         } else if (id == R.id.nav_slideshow) {
@@ -97,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_login) {
-            Intent lintent = new Intent(MainActivity.this, LoginActivity.class);
+            Intent lintent = new Intent(TaskList.this, LoginActivity.class);
             startActivity(lintent);
         }
 
@@ -108,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
 
     @Override
     public void onItemClick(int action, int position) {
-        intent = new Intent(MainActivity.this, Description.class);
+        intent = new Intent(TaskList.this, TaskDescription.class);
         intent.putExtra("task", adapter.getTask(position));
         intent.putExtra("requestcode", "update");
         startActivityForResult(intent, UPDATE_WORD_ACTIVITY_REQUEST_CODE);
@@ -118,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
         super.onActivityResult(requestCode, resultCode, Data);
 
         if (resultCode == RESULT_OK) {
-            Task task = new Task((Task) Objects.requireNonNull(Data.getParcelableExtra(Description.EXTRA_REPLY)));
+            Task task = new Task((Task) Objects.requireNonNull(Data.getParcelableExtra(TaskDescription.EXTRA_REPLY)));
             if(requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE) {
                 mTaskViewModel.insert(task);
             }

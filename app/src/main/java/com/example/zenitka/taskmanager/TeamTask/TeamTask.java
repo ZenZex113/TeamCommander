@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager;
+package com.example.zenitka.taskmanager.TeamTask;
 
 import android.os.Parcel;
 import android.os.Parcelable;

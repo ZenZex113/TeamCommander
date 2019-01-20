@@ -15,4 +15,14 @@
         android:textStyle="bold"
         android:text="TextView" />
 
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:text="TextView"
+        android:textColor="#696969" />
+
 </RelativeLayout>
