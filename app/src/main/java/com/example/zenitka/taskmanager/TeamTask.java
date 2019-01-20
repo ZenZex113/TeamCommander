@@ -65,15 +65,15 @@ public class TeamTask implements Parcelable {
         return 0;
     }
 
-    public static final Parcelable.Creator<Task> CREATOR = new Parcelable.Creator<Task>() {
+    public static final Parcelable.Creator<TeamTask> CREATOR = new Parcelable.Creator<TeamTask>() {
         @Override
-        public Task createFromParcel(Parcel in) {
-            return new Task(in);
+        public TeamTask createFromParcel(Parcel in) {
+            return new TeamTask(in);
         }
 
         @Override
-        public Task[] newArray(int size) {
-            return new Task[size];
+        public TeamTask[] newArray(int size) {
+            return new TeamTask[size];
         }
     };
 }
