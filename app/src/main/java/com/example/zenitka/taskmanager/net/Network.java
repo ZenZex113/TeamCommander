@@ -16,7 +16,7 @@ public class Network {
     private static Network ourInstance = new Network();
     private static HelloApi api;
 
-    private static final String BASE_URL = "http://10.23.45.214:5000/db/api/";
+    private static final String BASE_URL = "http://192.168.43.2:5000/db/api/";
 
     public static Network getInstance() {
         return ourInstance;

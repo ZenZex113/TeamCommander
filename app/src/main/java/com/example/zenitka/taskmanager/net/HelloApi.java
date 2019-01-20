@@ -11,15 +11,12 @@ import retrofit2.http.Path;
 
 public interface HelloApi {
 
-    @GET("get_user/{id}/")
-    Observable<User> getUser(@Path("id") long id);
-
-    @POST("create_user/")
-    Observable<User> saveUser(@Body User user);
-
     @POST("enter/")
     Observable<CodeToken> enterUser(@Body InputLoginPassword inputLoginPassword);
 
     @POST("create_user/")
     Observable<CodeID> registerUser(@Body NameSurnameLoginPassword nameSurnameLoginPassword);
+
+    @POST("create_team/")
+    Observable<CodeID> createTeam(@Body NameDescription nameDescription);
 }

@@ -27,6 +27,9 @@ import java.util.Objects;
 
 public class TeamList extends AppCompatActivity implements TeamAdapter.ItemClickListener, NavigationView.OnNavigationItemSelectedListener {
 
+
+
+
     List<Team> teams = new ArrayList<>();
     TeamAdapter adapter;
 

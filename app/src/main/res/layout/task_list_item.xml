@@ -1,29 +1,37 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:background="@drawable/custom_ripple"
+    android:orientation="horizontal"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:text="TextView" />
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/name"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="10dp"
-        android:text="TextView"
-        android:textColor="#696969" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:text="TextView"
+                android:textColor="#696969" />
 
 
             <ImageButton
@@ -36,6 +44,7 @@
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/ic_delete_black_24dp"
                 android:onClick="onDeleteClick" />
+
             <ImageView
                 android:id="@+id/status_i"
                 android:layout_width="wrap_content"
@@ -43,35 +52,35 @@
                 android:layout_below="@+id/date"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="5dp" />
+
             <TextView
                 android:id="@+id/status_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/date"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_below="@id/date"
                 android:layout_toEndOf="@id/status_i"
-                android:text=""/>
+                android:text="" />
 
             <ImageView
                 android:id="@+id/priority_i"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/date"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="5dp"
-                android:layout_below="@id/date"
-                android:layout_toEndOf="@id/status_name"
-                />
+                android:layout_toEndOf="@id/status_name" />
 
             <TextView
                 android:id="@+id/priority_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/date"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_below="@id/date"
                 android:layout_toEndOf="@id/priority_i"
-                android:text=""/>
-            </RelativeLayout>
+                android:text="" />
+        </RelativeLayout>
     </android.support.v7.widget.CardView>
 </RelativeLayout>
