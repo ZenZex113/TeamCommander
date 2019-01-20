@@ -108,5 +108,6 @@
         android:layout_height="wrap_content"
         android:text="Зарегистрироваться"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/repeatpassword_l"/>
+        android:layout_below="@id/repeatpassword_l"
+        android:onClick="onRegisterClick"/>
 </RelativeLayout>

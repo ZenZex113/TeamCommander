@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/password_l"
         android:layout_centerHorizontal="true"
-        android:text="Войти" />
+        android:text="Войти"/>
 
     <TextView
         android:id="@+id/register"
