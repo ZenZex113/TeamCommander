@@ -8,5 +8,5 @@ public class Team {
     public long UID;
     public String name;
     public List<User> users;
-    public List<Project> tasks;
+    public List<Project> projects;
 }
