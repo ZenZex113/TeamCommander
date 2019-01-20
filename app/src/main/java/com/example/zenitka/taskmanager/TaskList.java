@@ -79,6 +79,12 @@ public class TaskList extends AppCompatActivity implements TaskAdapter.ItemClick
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.task_list_menu, menu);
+        return true;
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {

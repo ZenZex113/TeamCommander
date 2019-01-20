@@ -7,13 +7,13 @@
     android:id="@+id/drawer_layout"
     tools:context=".TaskList"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_marginTop="?attr/actionBarSize"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_marginTop="?attr/actionBarSize"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -31,8 +31,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="16dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                app:backgroundTint="@color/colorAccent"
                 app:srcCompat="@drawable/ic_add_black_24dp" />
 
             <Button
@@ -73,10 +74,17 @@
                 android:id="@+id/my_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
+                android:background="@color/colorPrimary"
                 android:elevation="4dp"
                 android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                app:menu="@menu/list_toolbar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.AppBarLayout>
 
