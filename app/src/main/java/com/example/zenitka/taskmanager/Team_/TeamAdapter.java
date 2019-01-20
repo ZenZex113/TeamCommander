@@ -23,9 +23,9 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder>{
         this.teams = teams;
     }
 
-    void UpdateTeam(int position, Team team) {
-        teams.set(position, team);
-        notifyItemChanged(position);
+    void insertTeam(Team team) {
+        teams.add(teams.size(), team);
+        notifyItemInserted(teams.size());
     }
 
     @NonNull

@@ -3,6 +3,7 @@ package com.example.zenitka.taskmanager.Team_;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,13 +13,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.zenitka.taskmanager.RegLog.LoginActivity;
+import com.example.zenitka.taskmanager.Task;
+import com.example.zenitka.taskmanager.TaskDescription;
 import com.example.zenitka.taskmanager.TaskList;
 import com.example.zenitka.taskmanager.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class TeamList extends AppCompatActivity implements TeamAdapter.ItemClickListener, NavigationView.OnNavigationItemSelectedListener {
 
@@ -40,6 +45,15 @@ public class TeamList extends AppCompatActivity implements TeamAdapter.ItemClick
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TeamList.this, TeamDescription.class);
+                startActivityForResult(intent, 0);
+            }
+        });
     }
     private void setInitialData(){
 
@@ -91,8 +105,12 @@ public class TeamList extends AppCompatActivity implements TeamAdapter.ItemClick
 
     }
 
-    public void onAddFABClick(View view) {
-        Intent intent = new Intent(TeamList.this, TeamDescription.class);
-        startActivity(intent);
+    public void onActivityResult(int requestCode, int resultCode, Intent Data) {
+        super.onActivityResult(requestCode, resultCode, Data);
+
+        if (resultCode == RESULT_OK) {
+            Team team = new Team((Team) Objects.requireNonNull(Data.getParcelableExtra("team_back")));
+            adapter.insertTeam(team);
+        }
     }
 }
