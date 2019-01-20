@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.zenitka.taskmanager.RegLog.LoginActivity;
 import com.example.zenitka.taskmanager.TaskList;
@@ -73,8 +74,8 @@ public class TeamList extends AppCompatActivity implements TeamAdapter.ItemClick
             startActivity(lintent);
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+//        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+//        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -88,5 +89,10 @@ public class TeamList extends AppCompatActivity implements TeamAdapter.ItemClick
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+
+    public void onAddFABClick(View view) {
+        Intent intent = new Intent(TeamList.this, TeamDescription.class);
+        startActivity(intent);
     }
 }
