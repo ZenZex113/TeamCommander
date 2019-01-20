@@ -9,16 +9,8 @@
     tools:context=".TaskDescription">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ImageButton
-            android:id="@+id/button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/ic_arrow_back_black_24dp"
-            android:onClick="onBackClick"
-            android:contentDescription="TODO" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
 
         <TextView
             android:id="@+id/name"
@@ -196,14 +188,7 @@
             android:layout_below="@id/date"
             android:onClick="setDate"  />
 
-        <ImageButton
-            android:id="@+id/save"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/ic_save_black_24dp"
-            android:onClick="onSaveClick" />
+    </RelativeLayout>
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -218,5 +203,4 @@
 
         </android.support.design.widget.AppBarLayout>
 
-    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

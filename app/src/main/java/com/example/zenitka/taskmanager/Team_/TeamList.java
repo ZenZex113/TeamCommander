@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager.Team;
+package com.example.zenitka.taskmanager.Team_;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -59,11 +59,8 @@ public class TeamList extends AppCompatActivity implements TeamAdapter.ItemClick
         int id = item.getItemId();
 
         if (id == R.id.nav_list_of_tasks) {
-            Intent lintent = new Intent(TeamList.this, TaskList.class);
-            startActivity(lintent);
+            finish();
         } else if (id == R.id.nav_list_of_teams) {
-            Intent lintent = new Intent(TeamList.this, TeamList.class);
-            startActivity(lintent);
 
         } else if (id == R.id.nav_slideshow) {
 

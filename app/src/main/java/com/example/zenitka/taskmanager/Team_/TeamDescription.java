@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager.Team;
+package com.example.zenitka.taskmanager.Team_;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ public class TeamDescription extends AppCompatActivity {
         setContentView(R.layout.activity_team_description);
     }
 
-    public void onBackToTeamListClick(View view) {
+    public void onBackClick(View view) {
         finish();
     }
 }
