@@ -12,7 +12,7 @@ public class TeamTask implements Parcelable {
     int status = 0;
     int priority = 0;
     String desc = "";
-    String worker = "";
+    Long worker = null;
 
     TeamTask() {
 
@@ -40,7 +40,7 @@ public class TeamTask implements Parcelable {
         status = in.readInt();
         priority = in.readInt();
         desc = in.readString();
-        worker = in.readString();
+        worker = in.readLong();
     }
 
     @Override
@@ -57,7 +57,7 @@ public class TeamTask implements Parcelable {
         dest.writeInt(status);
         dest.writeInt(priority);
         dest.writeString(desc);
-        dest.writeString(worker);
+        dest.writeLong(worker);
     }
 
     @Override

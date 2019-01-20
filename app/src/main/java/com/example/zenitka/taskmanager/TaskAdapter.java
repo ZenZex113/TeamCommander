@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder>{
 
     private List<Task> tasks;
     private ItemClickListener ClickListener;
+    public TaskViewModel mTaskViewModel;
 
     TaskAdapter(List<Task> tasks) {
         this.tasks = tasks;
@@ -61,10 +63,25 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder>{
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView name;
         TextView date;
-        ViewHolder(View itemView){
+        ImageButton delete;
+        ViewHolder(final View itemView){
             super(itemView);
             name = itemView.findViewById(R.id.name);
             date = itemView.findViewById(R.id.date);
+            delete = itemView.findViewById(R.id.delete);
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    Task task = tasks.get(position);
+                    mTaskViewModel.delete(task);
+                    tasks.remove(position);
+                    notifyItemRemoved(position);
+                }
+            });
+            {
+
+            }
             itemView.setOnClickListener(this);
         }
         @Override
@@ -82,11 +99,4 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder>{
         void onItemClick(int action, int position);
     }
 }
-/*
-package ru.pap.archapp.ui.adapters;
 
-public interface IAdapterClickListener {
-
-    void onActionClick(int action, int position);
-
-}*/

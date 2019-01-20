@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
                 adapter.setTasks(tasks);
             }
         });
+
+        adapter.mTaskViewModel = mTaskViewModel;
     }
     @Override
     public void onBackPressed() {
