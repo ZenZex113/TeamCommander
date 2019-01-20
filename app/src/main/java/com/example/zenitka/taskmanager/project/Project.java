@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager.Project;
+package com.example.zenitka.taskmanager.project;
 
 import android.os.Parcel;
 import android.os.Parcelable;

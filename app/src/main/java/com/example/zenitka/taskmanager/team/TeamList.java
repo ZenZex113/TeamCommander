@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager.Team;
+package com.example.zenitka.taskmanager.team;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;

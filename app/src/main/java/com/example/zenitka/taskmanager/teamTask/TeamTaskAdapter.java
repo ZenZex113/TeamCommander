@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager.TeamTask;
+package com.example.zenitka.taskmanager.teamTask;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

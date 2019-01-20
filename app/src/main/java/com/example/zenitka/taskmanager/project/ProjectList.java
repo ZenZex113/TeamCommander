@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager.Project;
+package com.example.zenitka.taskmanager.project;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

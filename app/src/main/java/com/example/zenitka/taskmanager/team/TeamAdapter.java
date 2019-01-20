@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager.Team;
+package com.example.zenitka.taskmanager.team;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -19,7 +19,7 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder>{
     private List<Team> teams;
     private ItemClickListener ClickListener;
 
-    TeamAdapter(List<Team> teams) {
+    public TeamAdapter(List<Team> teams) {
         this.teams = teams;
     }
 

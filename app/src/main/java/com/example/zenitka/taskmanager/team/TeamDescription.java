@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager.Team;
+package com.example.zenitka.taskmanager.team;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

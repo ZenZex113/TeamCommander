@@ -19,13 +19,13 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.zenitka.taskmanager.RegLog.LoginActivity;
-import com.example.zenitka.taskmanager.Team.TeamList;
+import com.example.zenitka.taskmanager.team.TeamList;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class TaskList extends AppCompatActivity implements TaskAdapter.ItemClickListener, NavigationView.OnNavigationItemSelectedListener{
+public class TaskList extends AppCompatActivity implements TaskAdapter.ItemClickListener, NavigationView.OnNavigationItemSelectedListener {
     List<Task> tasks = new ArrayList<>();
     TaskAdapter adapter;
 

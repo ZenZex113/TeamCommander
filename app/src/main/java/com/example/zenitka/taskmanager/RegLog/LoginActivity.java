@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
                         System.out.println("Accepting...");
                         if (codeToken.getCode() == CODE_OK) {
                             Toast.makeText(LoginActivity.this, codeToken.getToken(), Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, TaskList.class);
                             startActivity(intent);
                         } else {
                             Toast.makeText(LoginActivity.this, ERRORS[codeToken.getCode()], Toast.LENGTH_SHORT).show();
