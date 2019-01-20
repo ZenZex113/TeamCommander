@@ -1,6 +1,6 @@
-package com.example.zenitka.taskmanager.team;
+package com.example.zenitka.taskmanager.Team_;
 
-import com.example.zenitka.taskmanager.project.Project;
+import com.example.zenitka.taskmanager.Project_.Project;
 
 import java.util.List;
 

@@ -14,18 +14,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.zenitka.taskmanager.RegLog.LoginActivity;
-import com.example.zenitka.taskmanager.team.TeamList;
+import com.example.zenitka.taskmanager.Team_.TeamList;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class TaskList extends AppCompatActivity implements TaskAdapter.ItemClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class TaskList extends AppCompatActivity implements TaskAdapter.ItemClickListener, NavigationView.OnNavigationItemSelectedListener{
     List<Task> tasks = new ArrayList<>();
     TaskAdapter adapter;
 
@@ -71,7 +73,11 @@ public class TaskList extends AppCompatActivity implements TaskAdapter.ItemClick
         });
 
         adapter.mTaskViewModel = mTaskViewModel;
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
     }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -87,8 +93,7 @@ public class TaskList extends AppCompatActivity implements TaskAdapter.ItemClick
         int id = item.getItemId();
 
         if (id == R.id.nav_list_of_tasks) {
-            Intent lintent = new Intent(TaskList.this, TaskList.class);
-            startActivity(lintent);
+
         } else if (id == R.id.nav_list_of_teams) {
             Intent lintent = new Intent(TaskList.this, TeamList.class);
             startActivity(lintent);

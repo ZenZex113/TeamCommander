@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager.teamTask;
+package com.example.zenitka.taskmanager.Team_;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,25 +12,25 @@ import com.example.zenitka.taskmanager.R;
 
 import java.util.List;
 
-public class TeamTaskAdapter extends RecyclerView.Adapter<TeamTaskAdapter.ViewHolder>{
+public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder>{
 
     public final static int ACTION_CLICK = 1;
 
-    private List<TeamTask> team_tasks;
+    private List<Team> teams;
     private ItemClickListener ClickListener;
 
-    TeamTaskAdapter(List<TeamTask> team_tasks) {
-        this.team_tasks = team_tasks;
+    TeamAdapter(List<Team> teams) {
+        this.teams = teams;
     }
 
-    void UpdateTeamTask(int position, TeamTask teamTask) {
-        team_tasks.set(position, teamTask);
+    void UpdateTeam(int position, Team team) {
+        teams.set(position, team);
         notifyItemChanged(position);
     }
 
     @NonNull
     @Override
-    public TeamTaskAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TeamAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.team_list_item, parent, false);
@@ -38,24 +38,24 @@ public class TeamTaskAdapter extends RecyclerView.Adapter<TeamTaskAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TeamTaskAdapter.ViewHolder holder, final int position) {
-        final TeamTask teamTask = team_tasks.get(position);
-        holder.name.setText(teamTask.name);
+    public void onBindViewHolder(@NonNull TeamAdapter.ViewHolder holder, final int position) {
+        final Team team = teams.get(position);
+        holder.name.setText(team.name);
     }
 
     @Override
     public int getItemCount() {
-        if(team_tasks != null)
-            return team_tasks.size();
+        if(teams != null)
+            return teams.size();
         else return 0;
     }
 
-    public TeamTask getTeamTask(int position){
-        return team_tasks.get(position);
+    public Team getTeam(int position){
+        return teams.get(position);
     }
 
-    void setTeamTasks(List<TeamTask> ttasks) {
-        team_tasks = ttasks;
+    void setTeams(List<Team> nteams) {
+        teams = nteams;
         notifyDataSetChanged();
     }
 
