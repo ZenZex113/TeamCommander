@@ -1,44 +1,23 @@
 package com.example.zenitka.taskmanager;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 
-import java.util.Calendar;
-import java.util.Date;
+public class TeamTask implements Parcelable {
 
-@Entity(tableName = "list_of_tasks")
-public class Task implements Parcelable {
-
-    @PrimaryKey(autoGenerate = true)
-    @NonNull
     public int UID;
-
-    @ColumnInfo(name = "name")
     public String name;
-
-    @ColumnInfo(name = "date")
     String date;
-
-    @ColumnInfo(name = "date_ms")
     Long date_ms;
-
-    @ColumnInfo(name = "status")
     int status = 0;
-
-    @ColumnInfo(name = "priority")
     int priority = 0;
-
-    @ColumnInfo(name = "desc")
     String desc = "";
+    Long worker = null;
 
-    Task() {
+    TeamTask() {
 
     }
-    Task(Task task) {
+    TeamTask(TeamTask task) {
         this.name = task.name;
         this.date = task.date;
         this.date_ms = task.date_ms;
@@ -46,9 +25,10 @@ public class Task implements Parcelable {
         this.priority = task.priority;
         this.desc = task.desc;
         this.UID = task.UID;
+        this.worker = task.worker;
     }
 
-    protected Task(Parcel in) {
+    protected TeamTask(Parcel in) {
         UID = in.readInt();
         name = in.readString();
         date = in.readString();
@@ -60,6 +40,7 @@ public class Task implements Parcelable {
         status = in.readInt();
         priority = in.readInt();
         desc = in.readString();
+        worker = in.readLong();
     }
 
     @Override
@@ -76,6 +57,7 @@ public class Task implements Parcelable {
         dest.writeInt(status);
         dest.writeInt(priority);
         dest.writeString(desc);
+        dest.writeLong(worker);
     }
 
     @Override
@@ -83,18 +65,15 @@ public class Task implements Parcelable {
         return 0;
     }
 
-    public static final Creator<Task> CREATOR = new Creator<Task>() {
+    public static final Parcelable.Creator<TeamTask> CREATOR = new Parcelable.Creator<TeamTask>() {
         @Override
-        public Task createFromParcel(Parcel in) {
-            return new Task(in);
+        public TeamTask createFromParcel(Parcel in) {
+            return new TeamTask(in);
         }
 
         @Override
-        public Task[] newArray(int size) {
-            return new Task[size];
+        public TeamTask[] newArray(int size) {
+            return new TeamTask[size];
         }
     };
 }
-
-
-

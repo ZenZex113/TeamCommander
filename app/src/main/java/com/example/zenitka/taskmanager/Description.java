@@ -17,11 +17,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import java.util.Calendar;
-import java.util.Objects;
-import java.util.UUID;
 
 public class Description extends AppCompatActivity {
 
@@ -40,42 +37,43 @@ public class Description extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Intent intent = getIntent();
-        Task task_edit = new Task((Task) intent.getParcelableExtra("task"));
-        TextInputEditText name_edit = findViewById(R.id.name_edit);
-        EditText desc_edit = findViewById(R.id.description_edit);
-        TextView date_edit = findViewById(R.id.date_edit);
-        name_edit.setText(task_edit.name);
-        date_edit.setText(task_edit.date);
-        desc_edit.setText(task_edit.desc);
-        switch (task_edit.status) {
-            case 1:
-                RadioButton status_not_started = (RadioButton) findViewById(R.id.status_not_started);
-                status_not_started.setChecked(true);
-                break;
-            case 2:
-                RadioButton status_in_progress = (RadioButton) findViewById(R.id.status_in_progress);
-                status_in_progress.setChecked(true);
-                break;
-            case 3:
-                RadioButton status_complete = (RadioButton) findViewById(R.id.status_complete);
-                status_complete.setChecked(true);
-                break;
+        if(intent.getStringExtra("requestcode").equals("update")) {
+            Task task_edit = new Task((Task) intent.getParcelableExtra("task"));
+            TextInputEditText name_edit = findViewById(R.id.name_edit);
+            EditText desc_edit = findViewById(R.id.description_edit);
+            TextView date_edit = findViewById(R.id.date_edit);
+            name_edit.setText(task_edit.name);
+            date_edit.setText(task_edit.date);
+            desc_edit.setText(task_edit.desc);
+            switch (task_edit.status) {
+                case 1:
+                    RadioButton status_not_started = (RadioButton) findViewById(R.id.status_not_started);
+                    status_not_started.setChecked(true);
+                    break;
+                case 2:
+                    RadioButton status_in_progress = (RadioButton) findViewById(R.id.status_in_progress);
+                    status_in_progress.setChecked(true);
+                    break;
+                case 3:
+                    RadioButton status_complete = (RadioButton) findViewById(R.id.status_complete);
+                    status_complete.setChecked(true);
+                    break;
+            }
+            switch (task_edit.priority) {
+                case 1:
+                    RadioButton priority_low = (RadioButton) findViewById(R.id.priority_low);
+                    priority_low.setChecked(true);
+                    break;
+                case 2:
+                    RadioButton priority_medium = (RadioButton) findViewById(R.id.priority_medium);
+                    priority_medium.setChecked(true);
+                    break;
+                case 3:
+                    RadioButton priority_high = (RadioButton) findViewById(R.id.priority_high);
+                    priority_high.setChecked(true);
+                    break;
+            }
         }
-        switch (task_edit.priority) {
-            case 1:
-                RadioButton priority_low = (RadioButton) findViewById(R.id.priority_low);
-                priority_low.setChecked(true);
-                break;
-            case 2:
-                RadioButton priority_medium = (RadioButton) findViewById(R.id.priority_medium);
-                priority_medium.setChecked(true);
-                break;
-            case 3:
-                RadioButton priority_high = (RadioButton) findViewById(R.id.priority_high);
-                priority_high.setChecked(true);
-                break;
-        }
-
         currentDateTime = findViewById(R.id.date_edit);
         setInitialDateTime();
     }
@@ -120,65 +118,52 @@ public class Description extends AppCompatActivity {
             setInitialDateTime();
         }
     };
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_description, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if(id == R.id.save) {
-            TextInputEditText name_edit = findViewById(R.id.name_edit);
-            EditText desc_edit = findViewById(R.id.description_edit);
-            TextView date_edit = findViewById(R.id.date_edit);
-
-            Intent intent = getIntent();
-            if(intent.getStringExtra("requestcode").equals("update")) {
-                Task task_old = new Task((Task) intent.getParcelableExtra("task"));
-                task.UID = task_old.UID;
-            }
-            task.desc = desc_edit.getText().toString();
-            task.date = date_edit.getText().toString();
-            task.name = name_edit.getText().toString();
-
-            RadioButton status_not_started = findViewById(R.id.status_not_started);
-            RadioButton status_in_progress = findViewById(R.id.status_in_progress);
-            RadioButton status_complete = findViewById(R.id.status_complete);
-            RadioButton priority_low = findViewById(R.id.priority_low);
-            RadioButton priority_medium = findViewById(R.id.priority_medium);
-            RadioButton priority_high = findViewById(R.id.priority_high);
-
-            if(status_not_started.isChecked())
-                task.status = 1;
-            else if(status_in_progress.isChecked())
-                task.status = 2;
-            else if(status_complete.isChecked())
-                task.status = 3;
-            else
-                task.status = 0;
-            if(priority_low.isChecked())
-                task.priority = 1;
-            else if(priority_medium.isChecked())
-                task.priority = 2;
-            else if(priority_high.isChecked())
-                task.priority = 3;
-            else
-                task.priority = 0;
-
-            if(TextUtils.isEmpty(name_edit.getText())) {
-                setResult(RESULT_CANCELED, intent);
-            } else {
-                intent.putExtra(EXTRA_REPLY, task);
-                setResult(RESULT_OK, intent);
-                finish();
-            }
-        }
-        return true;
-    }
 
     public void onBackClick(View view) {
         finish();
+    }
+
+    public void onSaveClick(View view) {
+        TextInputEditText name_edit = findViewById(R.id.name_edit);
+        EditText desc_edit = findViewById(R.id.description_edit);
+        TextView date_edit = findViewById(R.id.date_edit);
+        Intent intent = getIntent();
+        if(intent.getStringExtra("requestcode").equals("update")) {
+            Task task_old = new Task((Task) intent.getParcelableExtra("task"));
+            task.UID = task_old.UID;
+        }
+        task.desc = desc_edit.getText().toString();
+        task.date = date_edit.getText().toString();
+        task.name = name_edit.getText().toString();
+        RadioButton status_not_started = findViewById(R.id.status_not_started);
+        RadioButton status_in_progress = findViewById(R.id.status_in_progress);
+        RadioButton status_complete = findViewById(R.id.status_complete);
+        RadioButton priority_low = findViewById(R.id.priority_low);
+        RadioButton priority_medium = findViewById(R.id.priority_medium);
+        RadioButton priority_high = findViewById(R.id.priority_high);
+
+        if(status_not_started.isChecked())
+            task.status = 1;
+        else if(status_in_progress.isChecked())
+            task.status = 2;
+        else if(status_complete.isChecked())
+            task.status = 3;
+        else
+            task.status = 0;
+        if(priority_low.isChecked())
+            task.priority = 1;
+        else if(priority_medium.isChecked())
+            task.priority = 2;
+        else if(priority_high.isChecked())
+            task.priority = 3;
+        else
+            task.priority = 0;
+        if(TextUtils.isEmpty(name_edit.getText())) {
+            setResult(RESULT_CANCELED, intent);
+        } else {
+            intent.putExtra(EXTRA_REPLY, task);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
     }
 }

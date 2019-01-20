@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements DataAdapter.ItemClickListener, NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemClickListener, NavigationView.OnNavigationItemSelectedListener{
     List<Task> tasks = new ArrayList<>();
-    DataAdapter adapter;
+    TaskAdapter adapter;
 
     Intent intent;
 
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements DataAdapter.ItemC
         setInitialData();
         RecyclerView recyclerView = findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new DataAdapter(tasks);
+        adapter = new TaskAdapter(tasks);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements DataAdapter.ItemC
                 adapter.setTasks(tasks);
             }
         });
+
+        adapter.mTaskViewModel = mTaskViewModel;
     }
     @Override
     public void onBackPressed() {
@@ -79,12 +81,14 @@ public class MainActivity extends AppCompatActivity implements DataAdapter.ItemC
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_list_of_tasks) {
+            Intent lintent = new Intent(MainActivity.this, MainActivity.class);
+            startActivity(lintent);
+        } else if (id == R.id.nav_list_of_teams) {
+            Intent lintent = new Intent(MainActivity.this, TeamList.class);
+            startActivity(lintent);
 
         } else if (id == R.id.nav_slideshow) {
 
@@ -158,7 +162,8 @@ public class MainActivity extends AppCompatActivity implements DataAdapter.ItemC
                 adapter.setTasks(tasks);
             }
         });
-
+    }
+    public void onDeleteClick () {
     }
 }
 
