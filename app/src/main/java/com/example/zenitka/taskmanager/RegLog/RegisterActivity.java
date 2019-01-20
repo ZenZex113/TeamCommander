@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager;
+package com.example.zenitka.taskmanager.RegLog;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -20,6 +20,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 
 import static com.example.zenitka.taskmanager.helpers.Errors.CODE_OK;
+
+import com.example.zenitka.taskmanager.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -66,8 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void onRegisterBackClick(View view) {
-        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-        startActivity(intent);
+        finish();
     }
 
     public void onRegisterClick(View view) {

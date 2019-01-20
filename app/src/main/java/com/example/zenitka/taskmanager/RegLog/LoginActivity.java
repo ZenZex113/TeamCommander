@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager;
+package com.example.zenitka.taskmanager.RegLog;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -19,6 +19,9 @@ import io.reactivex.functions.Consumer;
 
 import static com.example.zenitka.taskmanager.helpers.Errors.CODE_OK;
 import static com.example.zenitka.taskmanager.helpers.Errors.ERRORS;
+
+import com.example.zenitka.taskmanager.TaskList;
+import com.example.zenitka.taskmanager.R;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -138,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onBackClick(View view) {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Intent intent = new Intent(LoginActivity.this, TaskList.class);
         startActivity(intent);
     }
 

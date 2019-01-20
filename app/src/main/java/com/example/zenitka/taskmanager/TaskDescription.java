@@ -9,8 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -20,7 +18,7 @@ import android.widget.TimePicker;
 
 import java.util.Calendar;
 
-public class Description extends AppCompatActivity {
+public class TaskDescription extends AppCompatActivity {
 
     public static final String EXTRA_REPLY = "com.example.zenitka.taskmanager.REPLY";
 
@@ -79,7 +77,7 @@ public class Description extends AppCompatActivity {
     }
 
     public void setDate(View v) {
-        new DatePickerDialog(Description.this, d,
+        new DatePickerDialog(TaskDescription.this, d,
                 dateAndTime.get(Calendar.YEAR),
                 dateAndTime.get(Calendar.MONTH),
                 dateAndTime.get(Calendar.DAY_OF_MONTH))
@@ -87,7 +85,7 @@ public class Description extends AppCompatActivity {
     }
 
     public void setTime(View v) {
-        new TimePickerDialog(Description.this, t,
+        new TimePickerDialog(TaskDescription.this, t,
                 dateAndTime.get(Calendar.HOUR_OF_DAY),
                 dateAndTime.get(Calendar.MINUTE), true)
                 .show();
