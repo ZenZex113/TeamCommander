@@ -35,6 +35,7 @@
         android:layout_marginTop="7dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/ic_delete_black_24dp"
+        android:contentDescription="TODO"
         android:onClick="onDeleteClick" />
 
 </RelativeLayout>

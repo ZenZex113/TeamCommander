@@ -18,6 +18,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:background="@drawable/ic_arrow_back_black_24dp"
+            android:contentDescription="TODO"
             android:onClick="onBackClick" />
 
         <TextView
@@ -43,7 +44,7 @@
             android:id="@+id/description_edit"
             android:layout_below="@+id/description"
             android:layout_alignParentStart="true"
-            android:textSize="14sp"
+            android:inputType="" android:textSize="14sp"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="7dp"
             android:layout_marginEnd="10dp"
