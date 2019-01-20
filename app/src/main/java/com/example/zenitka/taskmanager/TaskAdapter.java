@@ -2,11 +2,13 @@ package com.example.zenitka.taskmanager;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -42,6 +44,36 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder>{
         final Task task = tasks.get(position);
         holder.name.setText(task.name);
         holder.date.setText(task.date);
+        switch (task.status){
+            case 1:
+                holder.status.setImageResource(R.drawable.ic_block_black_24dp);
+                holder.status_name.setText("Не начато");
+                break;
+            case 2:
+                holder.status.setImageResource(R.drawable.ic_build_black_24dp);
+                holder.status_name.setText("В процессе");
+                break;
+            case 3:
+                holder.status.setImageResource(R.drawable.ic_check_black_24dp);
+                holder.status_name.setText("Завершено");
+                break;
+        }
+
+        switch (task.priority){
+            case 3:
+                holder.priority.setImageResource(R.drawable.ic_looks_3_black_24dp);
+                holder.priority_name.setText("Низкий");
+                break;
+            case 2:
+                holder.priority.setImageResource(R.drawable.ic_looks_two_black_24dp);
+                holder.priority_name.setText("Средний");
+                break;
+            case 1:
+                holder.priority.setImageResource(R.drawable.ic_looks_one_black_24dp);
+                holder.priority_name.setText("Высокий");
+                break;
+        }
+
     }
 
     @Override
@@ -63,11 +95,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder>{
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView name;
         TextView date;
+        TextView status_name, priority_name;
         ImageButton delete;
+        CardView cv;
+        ImageView status, priority;
         ViewHolder(final View itemView){
             super(itemView);
             name = itemView.findViewById(R.id.name);
             date = itemView.findViewById(R.id.date);
+            cv = itemView.findViewById(R.id.cv);
             delete = itemView.findViewById(R.id.delete);
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -79,9 +115,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder>{
                     notifyItemRemoved(position);
                 }
             });
-            {
-
-            }
+            status = itemView.findViewById(R.id.status_i);
+            priority = itemView.findViewById(R.id.priority_i);
+            status_name = itemView.findViewById(R.id.status_name);
+            priority_name = itemView.findViewById(R.id.priority_name);
             itemView.setOnClickListener(this);
         }
         @Override
