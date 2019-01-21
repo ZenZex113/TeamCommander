@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager.Team_;
+package com.example.zenitka.taskmanager;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -18,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.zenitka.taskmanager.RegLog.LoginActivity;
-import com.example.zenitka.taskmanager.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,14 +58,15 @@ public class TeamList extends AppCompatActivity implements TeamAdapter.ItemClick
                 startActivityForResult(intent, NEW_TEAM_ACTIVITY_REQUEST_CODE);
             }
         });
-
         mTeamViewModel = ViewModelProviders.of(this).get(TeamViewModel.class);
         mTeamViewModel.getAllTeams().observe(this, new Observer<List<Team>>() {
             @Override
-            public void onChanged(@Nullable final List<Team> tasks) {
-                adapter.setTeams(tasks);
+            public void onChanged(@Nullable final List<Team> teams) {
+                adapter.setTeams(teams);
             }
         });
+
+        adapter.mTeamViewModel = mTeamViewModel;
     }
     private void setInitialData(){
 

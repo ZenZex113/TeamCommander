@@ -4,8 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/sortByPriority"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never"/>
+        android:title="По приоритету"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/sortByDate"
+        android:orderInCategory="100"
+        android:title="По дате"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/sortByStatus"
+        android:orderInCategory="100"
+        android:title="По статусу"
+        app:showAsAction="never" />
 </menu>

@@ -1,16 +1,10 @@
-package com.example.zenitka.taskmanager.Team_;
+package com.example.zenitka.taskmanager;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import com.example.zenitka.taskmanager.Project_.Project;
-import com.example.zenitka.taskmanager.Team_.User;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.annotations.NonNull;
 

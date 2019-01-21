@@ -36,34 +36,6 @@
                 app:backgroundTint="@color/colorAccent"
                 app:srcCompat="@drawable/ic_add_black_24dp" />
 
-            <Button
-                android:id="@+id/sortByStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentBottom="true"
-                android:onClick="onSortByStatusClick"
-                android:text="ByStatus" />
-
-            <Button
-                android:id="@+id/sortByDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_toEndOf="@+id/sortByStatus"
-                android:onClick="onSortByDateClick"
-                android:text="ByDate" />
-
-            <Button
-                android:id="@+id/sortByPriority"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_toEndOf="@+id/sortByDate"
-                android:onClick="onSortByPriorityClick"
-                android:text="ByPriority" />
-
-
         </RelativeLayout>
 
         <android.support.design.widget.AppBarLayout
@@ -77,12 +49,20 @@
                 android:background="@color/colorPrimary"
                 android:elevation="4dp"
                 android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-                app:menu="@menu/list_toolbar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:textColor="#ffffff"
+                        android:textSize="28sp"
+                        android:text="Список дел" />
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>
 

@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager.Project_;
+package com.example.zenitka.taskmanager;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.example.zenitka.taskmanager.R;
 
 import java.util.List;
 
@@ -21,11 +19,6 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
 
     ProjectAdapter(List<Project> projects) {
         this.projects = projects;
-    }
-
-    void UpdateProject(int position, Project project) {
-        projects.set(position, project);
-        notifyItemChanged(position);
     }
 
     @NonNull
