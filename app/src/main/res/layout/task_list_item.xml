@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:background="@drawable/custom_ripple"
     android:orientation="horizontal"
-    android:padding="16dp">
+    android:layout_margin="16dp"
+    android:padding="5dp">
 
     <android.support.v7.widget.CardView
         android:id="@+id/cv"

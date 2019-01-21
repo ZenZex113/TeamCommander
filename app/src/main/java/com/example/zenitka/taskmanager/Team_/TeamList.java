@@ -1,8 +1,11 @@
 package com.example.zenitka.taskmanager.Team_;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,12 +16,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.zenitka.taskmanager.RegLog.LoginActivity;
-import com.example.zenitka.taskmanager.Task;
-import com.example.zenitka.taskmanager.TaskDescription;
-import com.example.zenitka.taskmanager.TaskList;
 import com.example.zenitka.taskmanager.R;
 
 import java.util.ArrayList;
@@ -32,6 +31,11 @@ public class TeamList extends AppCompatActivity implements TeamAdapter.ItemClick
 
     List<Team> teams = new ArrayList<>();
     TeamAdapter adapter;
+
+    private TeamViewModel mTeamViewModel;
+
+    public static final int NEW_TEAM_ACTIVITY_REQUEST_CODE = 1;
+    public static final int UPDATE_TEAM_ACTIVITY_REQUEST_CODE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +57,17 @@ public class TeamList extends AppCompatActivity implements TeamAdapter.ItemClick
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(TeamList.this, TeamDescription.class);
-                startActivityForResult(intent, 0);
+                Intent intent = new Intent(TeamList.this, TeamEdit.class);
+                intent.putExtra("requestcode", "insert");
+                startActivityForResult(intent, NEW_TEAM_ACTIVITY_REQUEST_CODE);
+            }
+        });
+
+        mTeamViewModel = ViewModelProviders.of(this).get(TeamViewModel.class);
+        mTeamViewModel.getAllTeams().observe(this, new Observer<List<Team>>() {
+            @Override
+            public void onChanged(@Nullable final List<Team> tasks) {
+                adapter.setTeams(tasks);
             }
         });
     }
@@ -99,8 +112,10 @@ public class TeamList extends AppCompatActivity implements TeamAdapter.ItemClick
 
     @Override
     public void onItemClick(int action, int position) {
-        Intent intent = new Intent(TeamList.this, TeamDescription.class);
-        startActivity(intent);
+        Intent intent = new Intent(TeamList.this, TeamEdit.class);
+        intent.putExtra("team", adapter.getTeam(position));
+        intent.putExtra("requestcode", "update");
+        startActivityForResult(intent, UPDATE_TEAM_ACTIVITY_REQUEST_CODE);
     }
 
     @Override
@@ -112,8 +127,8 @@ public class TeamList extends AppCompatActivity implements TeamAdapter.ItemClick
         super.onActivityResult(requestCode, resultCode, Data);
 
         if (resultCode == RESULT_OK) {
-            Team team = new Team((Team) Objects.requireNonNull(Data.getParcelableExtra("team_back")));
-            adapter.insertTeam(team);
+            Team team = new Team((Team) Objects.requireNonNull(Data.getParcelableExtra(TeamEdit.EXTRA_REPLY)));
+            mTeamViewModel.insert(team);
         }
     }
 }
