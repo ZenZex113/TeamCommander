@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="Zenzex"
-        android:textSize="40sp"
+        android:textSize="50sp"
         android:textColor="#ffffff"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
