@@ -13,10 +13,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Network {
 
+    public interface OnConnectionTimeoutListener {
+        void onConnectionTimeout();
+    }
+
     private static Network ourInstance = new Network();
     private static HelloApi api;
 
-    private static final String BASE_URL = "http://192.168.43.2:5000/db/api/";
+    private static final String BASE_URL = "http://10.23.45.214:5000/db/api/";
 
     public static Network getInstance() {
         return ourInstance;
@@ -26,7 +30,7 @@ public class Network {
         OkHttpClient client = new OkHttpClient.Builder()
                 .writeTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
-                .connectTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(5, TimeUnit.SECONDS)
                 .build();
 
         Gson gson = new GsonBuilder().setLenient()

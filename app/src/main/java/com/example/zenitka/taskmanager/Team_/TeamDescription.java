@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.zenitka.taskmanager.Project_.ProjectList;
 import com.example.zenitka.taskmanager.R;
 import com.example.zenitka.taskmanager.RegLog.LoginActivity;
 import com.example.zenitka.taskmanager.TaskList;
@@ -41,10 +42,9 @@ public class TeamDescription extends AppCompatActivity {
                         System.out.println("Accepting...");
                         if (codeID.getCode() == CODE_OK) {
                             Toast.makeText(TeamDescription.this, codeID.getID().toString(), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(TeamDescription.this, ProjectList.class);
+                            startActivity(intent);
                             finish();
-
-//                            Intent intent = new Intent(LoginActivity.this, TaskList.class);
-//                            startActivity(intent);
                         } else {
                             Toast.makeText(TeamDescription.this, ERRORS[codeID.getCode()], Toast.LENGTH_SHORT).show();
                         }
