@@ -1,6 +1,7 @@
 package com.example.zenitka.taskmanager.net;
 
 
+import com.example.zenitka.taskmanager.Team;
 import com.example.zenitka.taskmanager.User;
 
 import java.util.List;
@@ -24,4 +25,13 @@ public interface HelloApi {
 
     @GET("load_teams_list/{token}")
     Observable<CodeListTeam> loadTeamsList(@Path("token") String token);
+
+    @POST("delete_user_from_team/")
+    Observable<Code> deleteUserFromTeam(@Body TokenTeam tokenTeam);
+
+    @POST("change_team/")
+    Observable<Code> updateTeam(@Body Team team);
+
+    @GET("get_tasks_list/{project_id}")
+    Observable<CodeListTasks> loadTasksList(@Path("project_id") Integer project_id);
 }

@@ -8,6 +8,7 @@ public class Errors {
     public static final byte CODE_JSON_ERROR = 4;
     public static final byte CODE_SQL_ERROR = 5;
     public static final byte CODE_USER_ALREADY_EXISTS = 6;
+    public static final byte CODE_WRONG_TOKEN = 7;
 
     public static final String MESSAGE_OK = "OK";
     public static final String MESSAGE_NOT_FOUND = "Нет пользователя с данным логином";
@@ -16,6 +17,7 @@ public class Errors {
     public static final String MESSAGE_JSON_ERROR = "ошибка в JSON";
     public static final String MESSAGE_SQL_ERROR = "ошибка в SQL-запросе к серверу";
     public static final String MESSAGE_USER_ALREADY_EXISTS = "такой юзер уже существует";
+    public static final String MESSAGE_WRONG_TOKEN = "данный токен истёк или никогда не был создан";
 
     public static final String[] ERRORS = {
             MESSAGE_OK,
@@ -24,5 +26,6 @@ public class Errors {
             MESSAGE_INCORRECT_REQUEST,
             MESSAGE_JSON_ERROR,
             MESSAGE_SQL_ERROR,
-            MESSAGE_USER_ALREADY_EXISTS};
+            MESSAGE_USER_ALREADY_EXISTS,
+            MESSAGE_WRONG_TOKEN};
 }
