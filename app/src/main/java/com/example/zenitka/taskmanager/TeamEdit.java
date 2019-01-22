@@ -1,7 +1,10 @@
 package com.example.zenitka.taskmanager;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +16,7 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemClickListener {
@@ -21,6 +25,7 @@ public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemCl
     List<Project> projects = new ArrayList<>();
     ProjectAdapter adapter;
 
+    private ProjectViewModel mProjectViewModel;
 
     public static final int NEW_TEAM_ACTIVITY_REQUEST_CODE = 1;
     public static final int UPDATE_WORD_ACTIVITY_REQUEST_CODE = 2;
@@ -52,6 +57,16 @@ public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemCl
                 startActivityForResult(intent, NEW_TEAM_ACTIVITY_REQUEST_CODE);
             }
         });
+
+        mProjectViewModel = ViewModelProviders.of(this).get(ProjectViewModel.class);
+        mProjectViewModel.getAllProjectsSortedByDate().observe(this, new Observer<List<Project>>() {
+            @Override
+            public void onChanged(@Nullable final List<Project> projects) {
+                adapter.setProjects(projects);
+            }
+        });
+
+        adapter.mProjectViewModel = mProjectViewModel;
     }
 
     private void setInitialData() {
@@ -60,9 +75,18 @@ public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemCl
     @Override
     public void onItemClick(int action, int position) {
         intent = new Intent(TeamEdit.this, ProjectEdit.class);
-        intent.putExtra("teamtask", adapter.getProject(position));
+        intent.putExtra("project", adapter.getProject(position));
         intent.putExtra("requestcode", "update");
         startActivityForResult(intent, UPDATE_WORD_ACTIVITY_REQUEST_CODE);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            Project project = new Project((Project) (data.getParcelableExtra(ProjectEdit.EXTRA_REPLY)));
+            mProjectViewModel.insert(project);
+        }
     }
 
     public void onBackTeamEditClick(View view) {

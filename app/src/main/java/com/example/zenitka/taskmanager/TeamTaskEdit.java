@@ -48,29 +48,29 @@ public class TeamTaskEdit extends AppCompatActivity {
             worker_edit.setText(ttask_edit.worker);
             switch (ttask_edit.tstatus) {
                 case 1:
-                    RadioButton status_not_started = (RadioButton) findViewById(R.id.status_not_started);
+                    RadioButton status_not_started = findViewById(R.id.status_not_started);
                     status_not_started.setChecked(true);
                     break;
                 case 2:
-                    RadioButton status_in_progress = (RadioButton) findViewById(R.id.status_in_progress);
+                    RadioButton status_in_progress = findViewById(R.id.status_in_progress);
                     status_in_progress.setChecked(true);
                     break;
                 case 3:
-                    RadioButton status_complete = (RadioButton) findViewById(R.id.status_complete);
+                    RadioButton status_complete = findViewById(R.id.status_complete);
                     status_complete.setChecked(true);
                     break;
             }
             switch (ttask_edit.tpriority) {
                 case 1:
-                    RadioButton priority_low = (RadioButton) findViewById(R.id.priority_low);
+                    RadioButton priority_low = findViewById(R.id.priority_low);
                     priority_low.setChecked(true);
                     break;
                 case 2:
-                    RadioButton priority_medium = (RadioButton) findViewById(R.id.priority_medium);
+                    RadioButton priority_medium = findViewById(R.id.priority_medium);
                     priority_medium.setChecked(true);
                     break;
                 case 3:
-                    RadioButton priority_high = (RadioButton) findViewById(R.id.priority_high);
+                    RadioButton priority_high = findViewById(R.id.priority_high);
                     priority_high.setChecked(true);
                     break;
             }
