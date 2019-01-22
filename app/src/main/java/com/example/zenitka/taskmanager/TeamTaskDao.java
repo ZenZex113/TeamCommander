@@ -32,4 +32,7 @@ public interface TeamTaskDao {
 
     @Query("SELECT * from list_of_teamtasks ORDER BY TUID ASC")
     LiveData<List<TeamTask>> getAllTasksSortedByUID();
+
+    @Query("SELECT * from list_of_teamtasks WHERE parentUID = :parentUID ORDER BY TUID ASC")
+    LiveData<List<TeamTask>> getProjectTeamTasks(int parentUID);
 }

@@ -22,6 +22,7 @@ import java.util.Objects;
 public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemClickListener {
 
     Intent intent;
+    Intent pintent;
     List<Project> projects = new ArrayList<>();
     ProjectAdapter adapter;
 
@@ -35,11 +36,27 @@ public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_edit);
+
         intent = getIntent();
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent pintent = new Intent(TeamEdit.this, ProjectEdit.class);
+                pintent.putExtra("requestcode", "insert");
+                Team team = new Team((Team) intent.getParcelableExtra("team"));
+                pintent.putExtra("parentUID", "" + team.UID);
+                startActivityForResult(pintent, NEW_TEAM_ACTIVITY_REQUEST_CODE);
+            }
+        });
         if(intent.getStringExtra("requestcode").equals("update")) {
             Team task_old = new Team((Team) intent.getParcelableExtra("team"));
             EditText name_edit = findViewById(R.id.name_edit);
             name_edit.setText(task_old.name);
+        }
+        else {
+            fab.hide();
         }
         setInitialData();
         RecyclerView recyclerView = findViewById(R.id.projectsrv);
@@ -48,24 +65,17 @@ public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemCl
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(TeamEdit.this, ProjectEdit.class);
-                intent.putExtra("requestcode", "insert");
-                startActivityForResult(intent, NEW_TEAM_ACTIVITY_REQUEST_CODE);
-            }
-        });
 
         mProjectViewModel = ViewModelProviders.of(this).get(ProjectViewModel.class);
-        mProjectViewModel.getAllProjectsSortedByDate().observe(this, new Observer<List<Project>>() {
-            @Override
-            public void onChanged(@Nullable final List<Project> projects) {
-                adapter.setProjects(projects);
-            }
-        });
-
+        if(intent.getStringExtra("requestcode").equals("update")) {
+            Team team = new Team((Team) intent.getParcelableExtra("team"));
+            mProjectViewModel.getTeamProjects(team.UID).observe(this, new Observer<List<Project>>() {
+                @Override
+                public void onChanged(@Nullable final List<Project> projects) {
+                    adapter.setProjects(projects);
+                }
+            });
+        }
         adapter.mProjectViewModel = mProjectViewModel;
     }
 
@@ -74,10 +84,12 @@ public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemCl
 
     @Override
     public void onItemClick(int action, int position) {
-        intent = new Intent(TeamEdit.this, ProjectEdit.class);
-        intent.putExtra("project", adapter.getProject(position));
-        intent.putExtra("requestcode", "update");
-        startActivityForResult(intent, UPDATE_WORD_ACTIVITY_REQUEST_CODE);
+        pintent = new Intent(TeamEdit.this, ProjectEdit.class);
+        pintent.putExtra("project", adapter.getProject(position));
+        pintent.putExtra("requestcode", "update");
+        Team team = new Team((Team) intent.getParcelableExtra("team"));
+        pintent.putExtra("parentUID", "" + team.UID);
+        startActivityForResult(pintent, UPDATE_WORD_ACTIVITY_REQUEST_CODE);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

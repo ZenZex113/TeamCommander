@@ -26,6 +26,9 @@ public class Project implements Parcelable {
     @ColumnInfo(name = "date_ms")
     Long date_ms;
 
+    @ColumnInfo(name = "parentUID")
+    public int parentUID;
+
     Project() {
 
     }
@@ -34,6 +37,7 @@ public class Project implements Parcelable {
         this.date = project.date;
         this.date_ms = project.date_ms;
         this.UID = project.UID;
+        this.parentUID = project.parentUID;
     }
 
     protected Project(Parcel in) {
@@ -45,6 +49,7 @@ public class Project implements Parcelable {
         } else {
             date_ms = in.readLong();
         }
+        parentUID = in.readInt();
     }
 
     @Override
@@ -58,6 +63,7 @@ public class Project implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeLong(date_ms);
         }
+        dest.writeInt(parentUID);
     }
 
     @Override

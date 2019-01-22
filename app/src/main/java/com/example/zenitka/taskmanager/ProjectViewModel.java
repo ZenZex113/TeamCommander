@@ -28,4 +28,8 @@ public class ProjectViewModel extends AndroidViewModel {
     public void delete(Project project) {
         mRepository.delete(project);
     }
+
+    public LiveData<List<Project>> getTeamProjects(int parentUID) {
+        return mRepository.getTeamProjects(parentUID);
+    }
 }

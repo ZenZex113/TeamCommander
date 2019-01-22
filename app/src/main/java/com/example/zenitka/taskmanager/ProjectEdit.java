@@ -51,12 +51,26 @@ public class ProjectEdit extends AppCompatActivity implements TeamTaskAdapter.It
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_edit);
         tintent = getIntent();
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ttintent = new Intent(ProjectEdit.this, TeamTaskEdit.class);
+                Project project = new Project((Project) tintent.getParcelableExtra("project"));
+                ttintent.putExtra("parentUID", "" + project.UID);
+                ttintent.putExtra("requestcode", "insert");
+                startActivityForResult(ttintent, NEW_TEAM_TASK_ACTIVITY_REQUEST_CODE);
+            }
+        });
+
         if(tintent.getStringExtra("requestcode").equals("update")) {
             Project project_old = new Project((Project) tintent.getParcelableExtra("project"));
             EditText name_edit = findViewById(R.id.name_edit);
             name_edit.setText(project_old.name);
-
-    }
+        } else {
+            fab.hide();
+        }
         setInitialData();
         RecyclerView recyclerView = findViewById(R.id.teamtaskrv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -64,23 +78,17 @@ public class ProjectEdit extends AppCompatActivity implements TeamTaskAdapter.It
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ttintent = new Intent(ProjectEdit.this, TeamTaskEdit.class);
-                ttintent.putExtra("requestcode", "insert");
-                startActivityForResult(ttintent, NEW_TEAM_TASK_ACTIVITY_REQUEST_CODE);
-            }
-        });
 
         mTeamTaskViewModel = ViewModelProviders.of(this).get(TeamTaskViewModel.class);
-        mTeamTaskViewModel.getAllTasksSortedByDate().observe(this, new Observer<List<TeamTask>>() {
-            @Override
-            public void onChanged(@Nullable final List<TeamTask> ttasks) {
-                adapter.setTeamTasks(ttasks);
-            }
-        });
+        if(tintent.getStringExtra("requestcode").equals("update")) {
+            Project project = new Project((Project) tintent.getParcelableExtra("project"));
+            mTeamTaskViewModel.getProjectTeamTasks(project.UID).observe(this, new Observer<List<TeamTask>>() {
+                @Override
+                public void onChanged(@Nullable final List<TeamTask> ttasks) {
+                    adapter.setTeamTasks(ttasks);
+                }
+            });
+        }
 
         adapter.mTeamTaskViewModel = mTeamTaskViewModel;
 
@@ -135,8 +143,10 @@ public class ProjectEdit extends AppCompatActivity implements TeamTaskAdapter.It
     public void onItemClick(int action, int position) {
         ttintent = new Intent(ProjectEdit.this, TeamTaskEdit.class);
         ttintent.putExtra("teamtask", adapter.getTeamTask(position));
+        Project project = new Project((Project) tintent.getParcelableExtra("project"));
+        ttintent.putExtra("parentUID", "" + project.UID);
         ttintent.putExtra("requestcode", "update");
-        startActivityForResult(tintent, UPDATE_TEAM_TASK_ACTIVITY_REQUEST_CODE);
+        startActivityForResult(ttintent, UPDATE_TEAM_TASK_ACTIVITY_REQUEST_CODE);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent TTdata) {
@@ -162,6 +172,7 @@ public class ProjectEdit extends AppCompatActivity implements TeamTaskAdapter.It
         }
         project.date = date_edit.getText().toString();
         project.name = name_edit.getText().toString();
+        project.parentUID = Integer.parseInt(tintent.getStringExtra("parentUID"));
         if(TextUtils.isEmpty(name_edit.getText())) {
             setResult(RESULT_CANCELED,tintent);
         } else {

@@ -161,6 +161,7 @@ public class TeamTaskEdit extends AppCompatActivity {
             ttask.tpriority = 3;
         else
             ttask.tpriority = 0;
+        ttask.parentUID = Integer.parseInt(intent.getStringExtra("parentUID"));
         if(TextUtils.isEmpty(name_edit.getText())) {
             setResult(RESULT_CANCELED, intent);
         } else {

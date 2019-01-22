@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -39,6 +40,35 @@ public class TeamTaskAdapter extends RecyclerView.Adapter<TeamTaskAdapter.ViewHo
         holder.name.setText(teamTask.tname);
         holder.date.setText(teamTask.tdate);
         holder.worker.setText(teamTask.worker);
+        switch (teamTask.tstatus){
+            case 1:
+                holder.status.setImageResource(R.drawable.ic_close_black_24dp);
+                holder.status_name.setText("Не начато");
+                break;
+            case 2:
+                holder.status.setImageResource(R.drawable.ic_build_black_24dp);
+                holder.status_name.setText("В процессе");
+                break;
+            case 3:
+                holder.status.setImageResource(R.drawable.ic_check_black_24dp);
+                holder.status_name.setText("Завершено");
+                break;
+        }
+
+        switch (teamTask.tpriority){
+            case 3:
+                holder.priority.setImageResource(R.drawable.ic_looks_3_black_24dp);
+                holder.priority_name.setText("Низкий");
+                break;
+            case 2:
+                holder.priority.setImageResource(R.drawable.ic_looks_two_black_24dp);
+                holder.priority_name.setText("Средний");
+                break;
+            case 1:
+                holder.priority.setImageResource(R.drawable.ic_looks_one_black_24dp);
+                holder.priority_name.setText("Высокий");
+                break;
+        }
     }
 
     @Override
@@ -62,6 +92,8 @@ public class TeamTaskAdapter extends RecyclerView.Adapter<TeamTaskAdapter.ViewHo
         TextView date;
         ImageButton delete;
         TextView worker;
+        TextView status_name, priority_name;
+        ImageView status, priority;
         ViewHolder(View itemView){
             super(itemView);
             name = itemView.findViewById(R.id.name);
@@ -79,6 +111,10 @@ public class TeamTaskAdapter extends RecyclerView.Adapter<TeamTaskAdapter.ViewHo
                 }
             });
             itemView.setOnClickListener(this);
+            status = itemView.findViewById(R.id.status_i);
+            priority = itemView.findViewById(R.id.priority_i);
+            status_name = itemView.findViewById(R.id.status_name);
+            priority_name = itemView.findViewById(R.id.priority_name);
         }
         @Override
         public void onClick(View view) {

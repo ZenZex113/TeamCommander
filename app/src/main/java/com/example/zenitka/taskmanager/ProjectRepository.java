@@ -27,6 +27,10 @@ public class ProjectRepository {
         new ProjectRepository.deleteAsyncTask(mProjectDao).execute(project);
     }
 
+    public LiveData<List<Project>> getTeamProjects(int parentUID) {
+        return mProjectDao.getTeamProjects(parentUID);
+    }
+
     private static class insertAsyncTask extends AsyncTask<Project, Void, Void> {
 
         private ProjectDao mAsyncTaskDao;

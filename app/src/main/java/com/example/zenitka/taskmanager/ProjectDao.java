@@ -22,4 +22,6 @@ public interface ProjectDao {
     @Query("SELECT * from list_of_projects ORDER BY UID ASC")
     LiveData<List<Project>> getAllProjectsSortedByDate();
 
+    @Query("SELECT * from list_of_projects WHERE parentUID = :parentUID ORDER BY UID ASC")
+    LiveData<List<Project>> getTeamProjects(int parentUID);
 }
