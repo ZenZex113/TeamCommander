@@ -32,8 +32,8 @@ public class TeamTask implements Parcelable {
     @ColumnInfo(name = "tdesc")
     String tdesc = "";
 
-    /*@ColumnInfo(tname = "worker")
-    Long worker = null;*/
+    @ColumnInfo(name = "tworker")
+    String worker = null;
 
     TeamTask() {
     }
@@ -45,7 +45,7 @@ public class TeamTask implements Parcelable {
         this.tpriority = task.tpriority;
         this.tdesc = task.tdesc;
         this.TUID = task.TUID;
-//        this.worker = task.worker;
+        this.worker = task.worker;
     }
 
     protected TeamTask(Parcel in) {
@@ -60,7 +60,7 @@ public class TeamTask implements Parcelable {
         tstatus = in.readInt();
         tpriority = in.readInt();
         tdesc = in.readString();
-//        worker = in.readLong();
+        worker = in.readString();
     }
 
     @Override
@@ -77,7 +77,7 @@ public class TeamTask implements Parcelable {
         dest.writeInt(tstatus);
         dest.writeInt(tpriority);
         dest.writeString(tdesc);
-//        dest.writeLong(worker);
+        dest.writeString(worker);
     }
 
     @Override

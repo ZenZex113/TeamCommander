@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -17,6 +18,8 @@ public class TeamTaskAdapter extends RecyclerView.Adapter<TeamTaskAdapter.ViewHo
     private List<TeamTask> ttasks;
     private ItemClickListener ClickListener;
 
+    public TeamTaskViewModel mTeamTaskViewModel;
+
     TeamTaskAdapter(List<TeamTask> ttasks) {
         this.ttasks = ttasks;
     }
@@ -26,7 +29,7 @@ public class TeamTaskAdapter extends RecyclerView.Adapter<TeamTaskAdapter.ViewHo
     public TeamTaskAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.team_list_item, parent, false);
+        View view = inflater.inflate(R.layout.team_task_list_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -34,6 +37,8 @@ public class TeamTaskAdapter extends RecyclerView.Adapter<TeamTaskAdapter.ViewHo
     public void onBindViewHolder(@NonNull TeamTaskAdapter.ViewHolder holder, final int position) {
         final TeamTask teamTask = ttasks.get(position);
         holder.name.setText(teamTask.tname);
+        holder.date.setText(teamTask.tdate);
+        holder.worker.setText(teamTask.worker);
     }
 
     @Override
@@ -54,9 +59,25 @@ public class TeamTaskAdapter extends RecyclerView.Adapter<TeamTaskAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView name;
+        TextView date;
+        ImageButton delete;
+        TextView worker;
         ViewHolder(View itemView){
             super(itemView);
             name = itemView.findViewById(R.id.name);
+            date = itemView.findViewById(R.id.date);
+            worker = itemView.findViewById(R.id.worker);
+            delete = itemView.findViewById(R.id.delete);
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    TeamTask ttask = ttasks.get(position);
+                    mTeamTaskViewModel.delete(ttask);
+                    ttasks.remove(position);
+                    notifyItemRemoved(position);
+                }
+            });
             itemView.setOnClickListener(this);
         }
         @Override

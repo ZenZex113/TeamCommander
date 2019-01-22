@@ -37,13 +37,15 @@ public class TeamTaskEdit extends AppCompatActivity {
 
         intent = getIntent();
         if(intent.getStringExtra("requestcode").equals("update")) {
-            TeamTask ttask_edit = new TeamTask((TeamTask) intent.getParcelableExtra("task"));
+            TeamTask ttask_edit = new TeamTask((TeamTask) intent.getParcelableExtra("teamtask"));
             TextInputEditText name_edit = findViewById(R.id.name_edit);
             EditText desc_edit = findViewById(R.id.description_edit);
+            EditText worker_edit = findViewById(R.id.worker_edit);
             TextView date_edit = findViewById(R.id.date_edit);
             name_edit.setText(ttask_edit.tname);
             date_edit.setText(ttask_edit.tdate);
             desc_edit.setText(ttask_edit.tdesc);
+            worker_edit.setText(ttask_edit.worker);
             switch (ttask_edit.tstatus) {
                 case 1:
                     RadioButton status_not_started = (RadioButton) findViewById(R.id.status_not_started);
@@ -125,15 +127,17 @@ public class TeamTaskEdit extends AppCompatActivity {
     public void onSaveClick(View view) {
         TextInputEditText name_edit = findViewById(R.id.name_edit);
         EditText desc_edit = findViewById(R.id.description_edit);
+        EditText worker_edit = findViewById(R.id.worker_edit);
         TextView date_edit = findViewById(R.id.date_edit);
         intent = getIntent();
         if(intent.getStringExtra("requestcode").equals("update")) {
-            Task task_old = new Task((Task) intent.getParcelableExtra("task"));
-            ttask.TUID = task_old.UID;
+            TeamTask teamtask = new TeamTask((TeamTask) intent.getParcelableExtra("teamtask"));
+            ttask.TUID = teamtask.TUID;
         }
         ttask.tdesc = desc_edit.getText().toString();
         ttask.tdate = date_edit.getText().toString();
         ttask.tname = name_edit.getText().toString();
+        ttask.worker = worker_edit.getText().toString();
         RadioButton status_not_started = findViewById(R.id.status_not_started);
         RadioButton status_in_progress = findViewById(R.id.status_in_progress);
         RadioButton status_complete = findViewById(R.id.status_complete);
