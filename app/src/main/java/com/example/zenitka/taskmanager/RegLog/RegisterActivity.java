@@ -45,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-
+                        Toast.makeText(RegisterActivity.this, "Out of internet!", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

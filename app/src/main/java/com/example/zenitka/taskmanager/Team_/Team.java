@@ -20,6 +20,9 @@ public class Team implements Parcelable {
     @NonNull
     public long UID;
 
+    @ColumnInfo(name = "bd_id")
+    public long bd_id;
+
     @ColumnInfo(name = "name")
     public String name;
 
@@ -40,12 +43,14 @@ public class Team implements Parcelable {
         this.name = team.name;
         this.UID = team.UID;
         this.desc = team.desc;
+        this.bd_id = team.bd_id;
        /* this.users = team.users;
         this.projects = team.projects;*/
     }
 
     protected Team(Parcel in) {
         UID = in.readLong();
+        bd_id = in.readLong();
         name = in.readString();
         desc = in.readString();
         /*if (in.readByte() == 0x01) {
@@ -70,6 +75,7 @@ public class Team implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(UID);
+        dest.writeLong(bd_id);
         dest.writeString(name);
         dest.writeString(desc);
         /*if (users == null) {

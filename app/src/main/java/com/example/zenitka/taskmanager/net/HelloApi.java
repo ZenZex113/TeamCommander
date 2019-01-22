@@ -1,7 +1,10 @@
 package com.example.zenitka.taskmanager.net;
 
 
+import com.example.zenitka.taskmanager.Team_.Team;
 import com.example.zenitka.taskmanager.Team_.User;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -19,4 +22,7 @@ public interface HelloApi {
 
     @POST("create_team/")
     Observable<CodeID> createTeam(@Body NameDescription nameDescription);
+
+    @GET("load_teams_list/{token}")
+    Observable<CodeListTeam> loadTeamsList(@Path("token") String token);
 }

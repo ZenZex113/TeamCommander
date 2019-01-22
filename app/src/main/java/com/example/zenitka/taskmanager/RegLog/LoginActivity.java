@@ -2,6 +2,7 @@ package com.example.zenitka.taskmanager.RegLog;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +28,9 @@ public class LoginActivity extends AppCompatActivity {
 
     HelloApi api = Network.getInstance().getApi();
 
+    SharedPreferences mSharedPreferences;
+    public final static String SAVED_TOKEN = "saved_token";
+
     //.observeOn(AndroidSchedulers.mainThread())
 
     @SuppressLint("CheckResult")
@@ -38,7 +42,13 @@ public class LoginActivity extends AppCompatActivity {
                     public void accept(CodeToken codeToken) throws Exception {
                         System.out.println("Accepting...");
                         if (codeToken.getCode() == CODE_OK) {
-                            Toast.makeText(LoginActivity.this, codeToken.getToken(), Toast.LENGTH_SHORT).show();
+
+                            mSharedPreferences = getSharedPreferences("com.example.zenitka.taskmanager.token", MODE_PRIVATE);
+                            SharedPreferences.Editor ed = mSharedPreferences.edit();
+                            ed.putString(SAVED_TOKEN, codeToken.getToken());
+                            ed.commit();
+
+                            Toast.makeText(LoginActivity.this, mSharedPreferences.getString(SAVED_TOKEN, "An error occurred"), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(LoginActivity.this, TaskList.class);
                             startActivity(intent);
                         } else {
@@ -48,65 +58,10 @@ public class LoginActivity extends AppCompatActivity {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-
+                        Toast.makeText(LoginActivity.this, "Out of internet!", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
-
-//    public void getUser(long id) {
-//        api.getUser(id)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Consumer<User>() {
-//                    @Override
-//                    public void accept(User user) throws Exception {
-//                        if (user == null || user.getName() == null) {
-//                            tv_main.setText("No such user, or other error...");
-//                        } else {
-//                            tv_main.setText(user.toString());
-//                        }
-//                    }
-//                }, new Consumer<Throwable>() {
-//                    @Override
-//                    public void accept(Throwable throwable) throws Exception {
-//                        Log.e("error", throwable.getMessage(), throwable);
-//                        tv_main.setText("Something went wrong.");
-//                    }
-//                });
-//    }
-//
-//    public void saveUser(User user) {
-//        api.saveUser(user)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Consumer<User>() {
-//                    @Override
-//                    public void accept(User user) throws Exception {
-//                        tv_main.setText("OK, Added!");
-//                    }
-//                }, new Consumer<Throwable>() {
-//                    @Override
-//                    public void accept(Throwable throwable) throws Exception {
-//                        Log.e("error", throwable.getMessage(), throwable);
-//                    }
-//                });
-//    }
-
-
-//    public void getHello() {
-//        api.getHelloMessage()
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .delaySubscription(3, TimeUnit.SECONDS)
-//                .subscribe(new Consumer<HelloMessage>() {
-//                    @Override
-//                    public void accept(HelloMessage helloMessage) throws Exception {
-//                        ((TextView) findViewById(R.id.text_view)).setText(helloMessage.message);
-//                    }
-//                }, new Consumer<Throwable>() {
-//                    @Override
-//                    public void accept(Throwable throwable) throws Exception {
-//                        Log.e("error", throwable.getMessage(), throwable);
-//                    }
-//                });
-//    }
 
     android.support.design.widget.TextInputLayout et_login, et_password;
     Button btn_log;

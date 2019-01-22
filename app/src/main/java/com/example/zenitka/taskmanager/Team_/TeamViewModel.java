@@ -29,4 +29,6 @@ public class TeamViewModel extends AndroidViewModel {
     public void delete(Team team) {
         mRepository.delete(team);
     }
+
+    public void deleteAll() { mRepository.deleteAll();}
 }

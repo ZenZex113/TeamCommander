@@ -28,6 +28,8 @@ public class TeamRepository {
         new TeamRepository.deleteAsyncTeam(mTeamDao).execute(team);
     }
 
+    public void deleteAll() {new TeamRepository.deleteAsyncAll(mTeamDao).execute(); }
+
     private static class insertAsyncTeam extends AsyncTask<Team, Void, Void> {
 
         private TeamDao mAsyncTaskDao;
@@ -54,6 +56,19 @@ public class TeamRepository {
         @Override
         protected Void doInBackground(final Team... params) {
             mAsyncTaskDao.delete(params[0]);
+            return null;
+        }
+    }
+
+    private static class deleteAsyncAll extends AsyncTask<Void, Void, Void> {
+
+        private TeamDao mAsyncTaskDao;
+
+        deleteAsyncAll(TeamDao dao) {mAsyncTaskDao = dao;}
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mAsyncTaskDao.deleteAll();
             return null;
         }
     }
