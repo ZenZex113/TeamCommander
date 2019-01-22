@@ -1,6 +1,6 @@
 package com.example.zenitka.taskmanager.net;
 
-import com.example.zenitka.taskmanager.Team_.Team;
+import com.example.zenitka.taskmanager.Team;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
