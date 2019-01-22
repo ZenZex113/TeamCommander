@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager.Team_;
+package com.example.zenitka.taskmanager;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;

@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager.TeamTask_;
+package com.example.zenitka.taskmanager;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -6,31 +6,26 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
-
-import com.example.zenitka.taskmanager.R;
 
 import java.util.List;
 
-public class TeamTaskAdapter extends RecyclerView.Adapter<TeamTaskAdapter.ViewHolder>{
+public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder>{
 
     public final static int ACTION_CLICK = 1;
 
-    private List<TeamTask> team_tasks;
+    private List<Team> teams;
     private ItemClickListener ClickListener;
+    public TeamViewModel mTeamViewModel;
 
-    TeamTaskAdapter(List<TeamTask> team_tasks) {
-        this.team_tasks = team_tasks;
-    }
-
-    void UpdateTeamTask(int position, TeamTask teamTask) {
-        team_tasks.set(position, teamTask);
-        notifyItemChanged(position);
+    TeamAdapter(List<Team> teams) {
+        this.teams = teams;
     }
 
     @NonNull
     @Override
-    public TeamTaskAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TeamAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.team_list_item, parent, false);
@@ -38,32 +33,44 @@ public class TeamTaskAdapter extends RecyclerView.Adapter<TeamTaskAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TeamTaskAdapter.ViewHolder holder, final int position) {
-        final TeamTask teamTask = team_tasks.get(position);
-        holder.name.setText(teamTask.name);
+    public void onBindViewHolder(@NonNull TeamAdapter.ViewHolder holder, final int position) {
+        final Team team = teams.get(position);
+        holder.name.setText(team.name);
     }
 
     @Override
     public int getItemCount() {
-        if(team_tasks != null)
-            return team_tasks.size();
+        if(teams != null)
+            return teams.size();
         else return 0;
     }
 
-    public TeamTask getTeamTask(int position){
-        return team_tasks.get(position);
+    public Team getTeam(int position){
+        return teams.get(position);
     }
 
-    void setTeamTasks(List<TeamTask> ttasks) {
-        team_tasks = ttasks;
+    void setTeams(List<Team> nteams) {
+        teams = nteams;
         notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView name;
+        ImageButton delete;
         ViewHolder(View itemView){
             super(itemView);
             name = itemView.findViewById(R.id.name);
+            delete = itemView.findViewById(R.id.delete);
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    Team team = teams.get(position);
+                    mTeamViewModel.delete(team);
+                    teams.remove(position);
+                    notifyItemRemoved(position);
+                }
+            });
             itemView.setOnClickListener(this);
         }
         @Override

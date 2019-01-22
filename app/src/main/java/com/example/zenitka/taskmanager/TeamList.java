@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager.Team_;
+package com.example.zenitka.taskmanager;
 
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
@@ -10,6 +10,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -114,10 +116,12 @@ public class TeamList extends AppCompatActivity implements TeamAdapter.ItemClick
         mTeamViewModel = ViewModelProviders.of(this).get(TeamViewModel.class);
         mTeamViewModel.getAllTeams().observe(this, new Observer<List<Team>>() {
             @Override
-            public void onChanged(@Nullable final List<Team> tasks) {
-                adapter.setTeams(tasks);
+            public void onChanged(@Nullable final List<Team> teams) {
+                adapter.setTeams(teams);
             }
         });
+
+        adapter.mTeamViewModel = mTeamViewModel;
     }
     private void setInitialData(){
 
@@ -125,13 +129,12 @@ public class TeamList extends AppCompatActivity implements TeamAdapter.ItemClick
 
     @Override
     public void onBackPressed() {
-//        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-//            drawer.closeDrawer(GravityCompat.START);
-//        } else {
-//            super.onBackPressed();
-//        }
-        finish();
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override

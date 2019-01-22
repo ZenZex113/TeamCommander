@@ -21,7 +21,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.zenitka.taskmanager.RegLog.LoginActivity;
-import com.example.zenitka.taskmanager.Team_.TeamList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +80,38 @@ public class TaskList extends AppCompatActivity implements TaskAdapter.ItemClick
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.task_list_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id)  {
+            case R.id.sortByDate:
+                mTaskViewModel.getAllTasksSortedByDate().observe(this, new Observer<List<Task>>() {
+                    @Override
+                    public void onChanged(@Nullable final List<Task> tasks) {
+                        adapter.setTasks(tasks);
+                    }
+                });
+                break;
+            case R.id.sortByPriority:
+                mTaskViewModel.getAllTasksSortedByPriority().observe(this, new Observer<List<Task>>() {
+                    @Override
+                    public void onChanged(@Nullable final List<Task> tasks) {
+                        adapter.setTasks(tasks);
+                    }
+                });
+                break;
+            case R.id.sortByStatus:
+                mTaskViewModel.getAllTasksSortedByStatus().observe(this, new Observer<List<Task>>() {
+                    @Override
+                    public void onChanged(@Nullable final List<Task> tasks) {
+                        adapter.setTasks(tasks);
+                    }
+                });
+                break;
+        }
         return true;
     }
 
@@ -151,7 +182,7 @@ public class TaskList extends AppCompatActivity implements TaskAdapter.ItemClick
 
     }
 
-    public void onSortByStatusClick(View view) {
+    /*public void onSortByStatusClick(View view) {
         mTaskViewModel.getAllTasksSortedByStatus().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(@Nullable final List<Task> tasks) {
@@ -176,7 +207,7 @@ public class TaskList extends AppCompatActivity implements TaskAdapter.ItemClick
                 adapter.setTasks(tasks);
             }
         });
-    }
+    }*/
     public void onDeleteClick () {
     }
 }

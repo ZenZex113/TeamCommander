@@ -1,8 +1,7 @@
 package com.example.zenitka.taskmanager.net;
 
 
-import com.example.zenitka.taskmanager.Team_.Team;
-import com.example.zenitka.taskmanager.Team_.User;
+import com.example.zenitka.taskmanager.User;
 
 import java.util.List;
 
