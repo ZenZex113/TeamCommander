@@ -107,7 +107,7 @@ public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemCl
     @Override
     public void onItemClick(int action, int position) {
         intent = new Intent(TeamEdit.this, ProjectEdit.class);
-        intent.putExtra("task", adapter.getProject(position));
+        intent.putExtra("teamtask", adapter.getProject(position));
         intent.putExtra("requestcode", "update");
         startActivityForResult(intent, UPDATE_WORD_ACTIVITY_REQUEST_CODE);
     }

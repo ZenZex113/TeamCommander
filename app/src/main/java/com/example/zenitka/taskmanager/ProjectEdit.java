@@ -26,7 +26,8 @@ public class ProjectEdit extends AppCompatActivity implements TeamTaskAdapter.It
 
     public static final String EXTRA_REPLY = "com.example.zenitka.taskmanager.REPLY";
 
-    public static final int NEW_TEAM_ACTIVITY_REQUEST_CODE = 1;
+    public static final int NEW_TEAM_TASK_ACTIVITY_REQUEST_CODE = 1;
+    public static final int UPDATE_TEAM_TASK_ACTIVITY_REQUEST_CODE = 1;
 
     private TeamTaskViewModel mTeamTaskViewModel;
 
@@ -53,19 +54,19 @@ public class ProjectEdit extends AppCompatActivity implements TeamTaskAdapter.It
             public void onClick(View view) {
                 ttintent = new Intent(ProjectEdit.this, TeamTaskEdit.class);
                 ttintent.putExtra("requestcode", "insert");
-                startActivityForResult(ttintent, NEW_TEAM_ACTIVITY_REQUEST_CODE);
+                startActivityForResult(ttintent, NEW_TEAM_TASK_ACTIVITY_REQUEST_CODE);
             }
         });
 
         mTeamTaskViewModel = ViewModelProviders.of(this).get(TeamTaskViewModel.class);
         mTeamTaskViewModel.getAllTasksSortedByDate().observe(this, new Observer<List<TeamTask>>() {
             @Override
-            public void onChanged(@Nullable final List<TeamTask> tasks) {
+            public void onChanged(@Nullable final List<TeamTask> ttasks) {
                 adapter.setTeamTasks(ttasks);
             }
         });
 
-//        adapter.mTeamTaskViewModel = mTeamTaskViewModel;
+        adapter.mTeamTaskViewModel = mTeamTaskViewModel;
     }
 
     private void setInitialData() {
@@ -73,13 +74,14 @@ public class ProjectEdit extends AppCompatActivity implements TeamTaskAdapter.It
 
     @Override
     public void onItemClick(int action, int position) {
-
+        ttintent = new Intent(ProjectEdit.this, TeamTaskEdit.class);
+        ttintent.putExtra("teamtask", adapter.getTeamTask(position));
+        ttintent.putExtra("requestcode", "update");
+        startActivityForResult(ttintent, UPDATE_TEAM_TASK_ACTIVITY_REQUEST_CODE);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent TTdata) {
         super.onActivityResult(requestCode, resultCode, TTdata);
-        Task task = new Task();
-        TeamTask teamTask = new TeamTask();
 
         if (resultCode == RESULT_OK) {
             TeamTask ttask = new TeamTask((TeamTask) Objects.requireNonNull(TTdata.getParcelableExtra(TeamTaskEdit.EXTRA_REPLY)));

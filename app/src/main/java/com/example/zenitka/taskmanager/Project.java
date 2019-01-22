@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 public class Project implements Parcelable{
 
-    public Long UID = null;
+    public int UID;
     public String name;
     public String date;
     public Long date_ms;
@@ -23,7 +23,7 @@ public class Project implements Parcelable{
     }
 
     protected Project(Parcel in) {
-        UID = in.readLong();
+        UID = in.readInt();
         name = in.readString();
         date = in.readString();
         if (in.readByte() == 0) {
