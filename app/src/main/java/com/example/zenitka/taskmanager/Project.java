@@ -1,15 +1,33 @@
 package com.example.zenitka.taskmanager;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
-public class Project implements Parcelable{
+import java.util.Calendar;
+import java.util.Date;
 
+@Entity(tableName = "list_of_projects")
+public class Project implements Parcelable {
+
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
     public int UID;
+
+    @ColumnInfo(name = "name")
     public String name;
-    public String date;
-    public Long date_ms;
-    public String desc = "";
+
+    @ColumnInfo(name = "date")
+    String date;
+
+    @ColumnInfo(name = "date_ms")
+    Long date_ms;
+
+    @ColumnInfo(name = "parentUID")
+    public int parentUID;
 
     Project() {
 
@@ -18,8 +36,8 @@ public class Project implements Parcelable{
         this.name = project.name;
         this.date = project.date;
         this.date_ms = project.date_ms;
-        this.desc = project.desc;
         this.UID = project.UID;
+        this.parentUID = project.parentUID;
     }
 
     protected Project(Parcel in) {
@@ -31,12 +49,12 @@ public class Project implements Parcelable{
         } else {
             date_ms = in.readLong();
         }
-        desc = in.readString();
+        parentUID = in.readInt();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(UID);
+        dest.writeInt(UID);
         dest.writeString(name);
         dest.writeString(date);
         if (date_ms == null) {
@@ -45,7 +63,7 @@ public class Project implements Parcelable{
             dest.writeByte((byte) 1);
             dest.writeLong(date_ms);
         }
-        dest.writeString(desc);
+        dest.writeInt(parentUID);
     }
 
     @Override
@@ -53,7 +71,7 @@ public class Project implements Parcelable{
         return 0;
     }
 
-    public static final Parcelable.Creator<Project> CREATOR = new Parcelable.Creator<Project>() {
+    public static final Creator<Project> CREATOR = new Creator<Project>() {
         @Override
         public Project createFromParcel(Parcel in) {
             return new Project(in);
@@ -65,3 +83,6 @@ public class Project implements Parcelable{
         }
     };
 }
+
+
+

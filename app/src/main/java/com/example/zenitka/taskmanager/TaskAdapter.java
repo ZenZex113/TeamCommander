@@ -46,7 +46,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder>{
         holder.date.setText(task.date);
         switch (task.status){
             case 1:
-                holder.status.setImageResource(R.drawable.ic_block_black_24dp);
+                holder.status.setImageResource(R.drawable.ic_close_black_24dp);
                 holder.status_name.setText("Не начато");
                 break;
             case 2:

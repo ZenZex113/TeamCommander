@@ -45,6 +45,34 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/date_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name_edit"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:textColor="#ffffff"
+                android:text="TextView" />
+
+            <ImageButton android:id="@+id/timeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/date_edit"
+                android:layout_marginStart="10dp"
+                android:layout_below="@id/name_edit"
+                android:background="@drawable/ic_access_time_white_24dp"
+                android:onClick="setTime" />
+
+            <ImageButton android:id="@+id/dateButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/timeButton"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/ic_date_range_white_24dp"
+                android:layout_below="@id/name_edit"
+                android:onClick="setDate"  />
+
             <EditText
                 android:id="@+id/name_edit"
                 android:layout_width="wrap_content"
@@ -52,7 +80,7 @@
                 android:text="Название"
                 android:textColor="#ffffff"
                 android:textSize="36dp"
-                android:layout_alignParentBottom="true"/>
+                android:layout_centerVertical="true"/>
 
             <ImageButton
                 android:id="@+id/back"

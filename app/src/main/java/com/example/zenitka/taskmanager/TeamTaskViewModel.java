@@ -33,6 +33,10 @@ public class TeamTaskViewModel extends AndroidViewModel {
         return mRepository.getAllTasksSortedByUID();
     }
 
+    LiveData<List<TeamTask>> getProjectTeamTasks (int parentUID) {
+        return mRepository.getProjectTeamTasks(parentUID);
+    }
+
     public void insert(TeamTask ttask) {
         mRepository.insert(ttask);
     }

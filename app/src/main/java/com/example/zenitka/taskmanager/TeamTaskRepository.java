@@ -31,6 +31,10 @@ public class TeamTaskRepository {
         return mTTaskDao.getAllTasksSortedByUID();
     }
 
+    public LiveData<List<TeamTask>> getProjectTeamTasks(int parentUID) {
+        return mTTaskDao.getProjectTeamTasks(parentUID);
+    }
+
     public void insert(TeamTask ttask) {
         new TeamTaskRepository.insertAsyncTask(mTTaskDao).execute(ttask);
     }

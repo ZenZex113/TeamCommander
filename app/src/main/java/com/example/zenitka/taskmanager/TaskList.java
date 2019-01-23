@@ -40,7 +40,7 @@ public class TaskList extends AppCompatActivity implements TaskAdapter.ItemClick
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_task_list);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -57,7 +57,7 @@ public class TaskList extends AppCompatActivity implements TaskAdapter.ItemClick
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(TaskList.this, TaskDescription.class);
+                Intent intent = new Intent(TaskList.this, TaskEdit.class);
                 intent.putExtra("requestcode", "insert");
                 startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
             }
@@ -153,7 +153,7 @@ public class TaskList extends AppCompatActivity implements TaskAdapter.ItemClick
 
     @Override
     public void onItemClick(int action, int position) {
-        intent = new Intent(TaskList.this, TaskDescription.class);
+        intent = new Intent(TaskList.this, TaskEdit.class);
         intent.putExtra("task", adapter.getTask(position));
         intent.putExtra("requestcode", "update");
         startActivityForResult(intent, UPDATE_WORD_ACTIVITY_REQUEST_CODE);
@@ -163,7 +163,7 @@ public class TaskList extends AppCompatActivity implements TaskAdapter.ItemClick
         super.onActivityResult(requestCode, resultCode, Data);
 
         if (resultCode == RESULT_OK) {
-            Task task = new Task((Task) Objects.requireNonNull(Data.getParcelableExtra(TaskDescription.EXTRA_REPLY)));
+            Task task = new Task((Task) Objects.requireNonNull(Data.getParcelableExtra(TaskEdit.EXTRA_REPLY)));
             if(requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE) {
                 mTaskViewModel.insert(task);
             }
@@ -179,36 +179,6 @@ public class TaskList extends AppCompatActivity implements TaskAdapter.ItemClick
     }
 
     private void setInitialData(){
-
-    }
-
-    /*public void onSortByStatusClick(View view) {
-        mTaskViewModel.getAllTasksSortedByStatus().observe(this, new Observer<List<Task>>() {
-            @Override
-            public void onChanged(@Nullable final List<Task> tasks) {
-                adapter.setTasks(tasks);
-            }
-        });
-    }
-
-    public void onSortByDateClick(View view) {
-        mTaskViewModel.getAllTasksSortedByDate().observe(this, new Observer<List<Task>>() {
-            @Override
-            public void onChanged(@Nullable final List<Task> tasks) {
-                adapter.setTasks(tasks);
-            }
-        });
-    }
-
-    public void onSortByPriorityClick(View view) {
-        mTaskViewModel.getAllTasksSortedByPriority().observe(this, new Observer<List<Task>>() {
-            @Override
-            public void onChanged(@Nullable final List<Task> tasks) {
-                adapter.setTasks(tasks);
-            }
-        });
-    }*/
-    public void onDeleteClick () {
     }
 }
 

@@ -18,7 +18,7 @@ import android.widget.TimePicker;
 
 import java.util.Calendar;
 
-public class TaskDescription extends AppCompatActivity {
+public class TaskEdit extends AppCompatActivity {
 
     public static final String EXTRA_REPLY = "com.example.zenitka.taskmanager.REPLY";
 
@@ -30,7 +30,7 @@ public class TaskDescription extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_description);
+        setContentView(R.layout.activity_task_edit);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -82,7 +82,7 @@ public class TaskDescription extends AppCompatActivity {
     }
 
     public void setDate(View v) {
-        new DatePickerDialog(TaskDescription.this, d,
+        new DatePickerDialog(TaskEdit.this, d,
                 dateAndTime.get(Calendar.YEAR),
                 dateAndTime.get(Calendar.MONTH),
                 dateAndTime.get(Calendar.DAY_OF_MONTH))
@@ -90,7 +90,7 @@ public class TaskDescription extends AppCompatActivity {
     }
 
     public void setTime(View v) {
-        new TimePickerDialog(TaskDescription.this, t,
+        new TimePickerDialog(TaskEdit.this, t,
                 dateAndTime.get(Calendar.HOUR_OF_DAY),
                 dateAndTime.get(Calendar.MINUTE), true)
                 .show();

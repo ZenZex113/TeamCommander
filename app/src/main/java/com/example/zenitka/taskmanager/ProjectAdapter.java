@@ -2,10 +2,13 @@ package com.example.zenitka.taskmanager;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -16,6 +19,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
 
     private List<Project> projects;
     private ProjectAdapter.ItemClickListener ClickListener;
+    public ProjectViewModel mProjectViewModel;
 
     ProjectAdapter(List<Project> projects) {
         this.projects = projects;
@@ -56,10 +60,24 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView name;
         TextView date;
+        ImageButton delete;
+        CardView cv;
         ViewHolder(final View itemView){
             super(itemView);
             name = itemView.findViewById(R.id.name);
             date = itemView.findViewById(R.id.date);
+            cv = itemView.findViewById(R.id.cv);
+            delete = itemView.findViewById(R.id.delete);
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    Project project = projects.get(position);
+                    mProjectViewModel.delete(project);
+                    projects.remove(position);
+                    notifyItemRemoved(position);
+                }
+            });
             itemView.setOnClickListener(this);
         }
         @Override

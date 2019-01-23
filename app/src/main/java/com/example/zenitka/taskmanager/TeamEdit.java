@@ -1,9 +1,12 @@
 package com.example.zenitka.taskmanager;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +25,7 @@ import com.example.zenitka.taskmanager.net.Network;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -36,6 +40,7 @@ public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemCl
     SharedPreferences mSharedPreferences;
 
     Intent intent;
+    Intent pintent;
 
     HelloApi api = Network.getInstance().getApi();
 
@@ -94,6 +99,7 @@ public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemCl
     List<Project> projects = new ArrayList<>();
     ProjectAdapter adapter;
 
+    private ProjectViewModel mProjectViewModel;
 
     public static final int NEW_TEAM_ACTIVITY_REQUEST_CODE = 1;
     public static final int UPDATE_WORD_ACTIVITY_REQUEST_CODE = 2;
@@ -103,11 +109,27 @@ public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_edit);
+
         intent = getIntent();
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent pintent = new Intent(TeamEdit.this, ProjectEdit.class);
+                pintent.putExtra("requestcode", "insert");
+                Team team = new Team((Team) intent.getParcelableExtra("team"));
+                pintent.putExtra("parentUID", "" + team.UID);
+                startActivityForResult(pintent, NEW_TEAM_ACTIVITY_REQUEST_CODE);
+            }
+        });
         if (intent.getStringExtra("requestcode").equals("update")) {
             Team task_old = new Team((Team) intent.getParcelableExtra("team"));
             EditText name_edit = findViewById(R.id.name_edit);
             name_edit.setText(task_old.name);
+        }
+        else {
+            fab.hide();
         }
         setInitialData();
         RecyclerView recyclerView = findViewById(R.id.projectsrv);
@@ -116,15 +138,18 @@ public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemCl
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(TeamEdit.this, ProjectEdit.class);
-                intent.putExtra("requestcode", "insert");
-                startActivityForResult(intent, NEW_TEAM_ACTIVITY_REQUEST_CODE);
-            }
-        });
+
+        mProjectViewModel = ViewModelProviders.of(this).get(ProjectViewModel.class);
+        if(intent.getStringExtra("requestcode").equals("update")) {
+            Team team = new Team((Team) intent.getParcelableExtra("team"));
+            mProjectViewModel.getTeamProjects(team.UID).observe(this, new Observer<List<Project>>() {
+                @Override
+                public void onChanged(@Nullable final List<Project> projects) {
+                    adapter.setProjects(projects);
+                }
+            });
+        }
+        adapter.mProjectViewModel = mProjectViewModel;
     }
 
     private void setInitialData() {
@@ -132,10 +157,21 @@ public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemCl
 
     @Override
     public void onItemClick(int action, int position) {
-        intent = new Intent(TeamEdit.this, ProjectEdit.class);
-        intent.putExtra("teamtask", adapter.getProject(position));
-        intent.putExtra("requestcode", "update");
-        startActivityForResult(intent, UPDATE_WORD_ACTIVITY_REQUEST_CODE);
+        pintent = new Intent(TeamEdit.this, ProjectEdit.class);
+        pintent.putExtra("project", adapter.getProject(position));
+        pintent.putExtra("requestcode", "update");
+        Team team = new Team((Team) intent.getParcelableExtra("team"));
+        pintent.putExtra("parentUID", "" + team.UID);
+        startActivityForResult(pintent, UPDATE_WORD_ACTIVITY_REQUEST_CODE);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            Project project = new Project((Project) (data.getParcelableExtra(ProjectEdit.EXTRA_REPLY)));
+            mProjectViewModel.insert(project);
+        }
     }
 
     public void onBackTeamEditClick(View view) {

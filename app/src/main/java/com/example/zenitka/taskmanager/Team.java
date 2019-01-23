@@ -12,7 +12,7 @@ import io.reactivex.annotations.NonNull;
 public class Team implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     @NonNull
-    public long UID;
+    public int UID;
 
     @ColumnInfo(name = "id")
     @NonNull
@@ -44,7 +44,7 @@ public class Team implements Parcelable {
     }
 
     protected Team(Parcel in) {
-        UID = in.readLong();
+        UID = in.readInt();
         id = in.readInt();
         name = in.readString();
         desc = in.readString();
@@ -69,7 +69,7 @@ public class Team implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(UID);
+        dest.writeInt(UID);
         dest.writeInt(id);
         dest.writeString(name);
         dest.writeString(desc);
