@@ -10,10 +10,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#0f6bab"
         android:layout_marginTop="?attr/actionBarSize">
 
         <TextView
             android:id="@+id/name"
+            android:textColor="#ffffff"
             android:layout_width="wrap_content"
             android:layout_marginStart="10dp"
             android:textSize="22sp"
@@ -25,15 +27,17 @@
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/name_edit_layout"
             android:layout_alignParentStart="true"
             android:layout_marginStart="10dp"
-            android:layout_below="@+id/name_edit_layout"
+            android:text="Дата"
+            android:textColor="#ffffff"
             android:textSize="22sp"
-            android:textStyle="bold"
-            android:text="Дата" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/status"
+            android:textColor="#ffffff"
             android:layout_width="wrap_content"
             android:layout_marginStart="10dp"
             android:textSize="22sp"
@@ -44,6 +48,7 @@
 
         <TextView
             android:id="@+id/priority"
+            android:textColor="#ffffff"
             android:layout_width="wrap_content"
             android:layout_marginStart="10dp"
             android:textSize="22sp"
@@ -56,6 +61,7 @@
             android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_marginStart="10dp"
+            android:textColor="#ffffff"
             android:textSize="22sp"
             android:textStyle="bold"
             android:layout_height="wrap_content"
@@ -72,7 +78,6 @@
             android:layout_marginStart="7dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="40dp"
-            android:background="@color/edittextbackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -87,6 +92,7 @@
                 android:id="@+id/status_not_started"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#ffffff"
                 android:layout_marginLeft="10dp"
                 android:text="Не начато"
                 android:textSize="16sp" />
@@ -94,6 +100,7 @@
             <RadioButton
                 android:id="@+id/status_in_progress"
                 android:layout_width="wrap_content"
+                android:textColor="#ffffff"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="В процессе"
@@ -102,6 +109,7 @@
             <RadioButton
                 android:id="@+id/status_complete"
                 android:layout_width="wrap_content"
+                android:textColor="#ffffff"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="Завершено"
@@ -121,6 +129,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:textColor="#ffffff"
                 android:text="Низкий"
                 android:textSize="16sp" />
 
@@ -130,6 +139,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="Средний"
+                android:textColor="#ffffff"
                 android:textSize="16sp" />
 
             <RadioButton
@@ -137,6 +147,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:textColor="#ffffff"
                 android:text="Высокий"
                 android:textSize="16sp" />
         </RadioGroup>
@@ -150,6 +161,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:id="@+id/name_edit_layout"
+            android:textColor="#ffffff"
             android:text="TextView"
             app:errorEnabled="true"
             android:textSize="14sp">
@@ -157,6 +169,10 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/name_edit"
                 android:layout_width="match_parent"
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffff"
+                android:maxLength="25"
+                android:maxLines="1"
                 android:layout_height="wrap_content"
                 android:hint="Название" />
         </android.support.design.widget.TextInputLayout>
@@ -168,6 +184,7 @@
             android:layout_below="@+id/date"
             android:layout_alignParentStart="true"
             android:layout_marginStart="10dp"
+            android:textColor="#ffffff"
             android:text="TextView" />
 
         <ImageButton android:id="@+id/timeButton"
@@ -196,6 +213,7 @@
             android:textStyle="bold"
             android:layout_height="wrap_content"
             android:layout_below="@+id/priority_edit"
+            android:textColor="#ffffff"
             android:text="Исполнитель" />
 
 
@@ -203,11 +221,13 @@
             android:id="@+id/worker_edit"
             android:layout_below="@+id/worker"
             android:layout_alignParentStart="true"
+            android:maxLength="25"
+            android:maxLines="1"
             android:textSize="14sp"
+            android:textColor="#ffffff"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="7dp"
             android:layout_marginEnd="10dp"
-            android:background="@color/edittextbackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -217,7 +237,7 @@
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="#fdc80e"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:menu="@menu/list_toolbar"

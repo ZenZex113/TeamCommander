@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager.RegLog;
+package com.example.zenitka.teamcommander.RegLog;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -7,22 +7,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.zenitka.taskmanager.net.CodeToken;
-import com.example.zenitka.taskmanager.net.HelloApi;
-import com.example.zenitka.taskmanager.net.InputLoginPassword;
-import com.example.zenitka.taskmanager.net.Network;
+import com.example.zenitka.teamcommander.net.CodeToken;
+import com.example.zenitka.teamcommander.net.HelloApi;
+import com.example.zenitka.teamcommander.net.InputLoginPassword;
+import com.example.zenitka.teamcommander.net.Network;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 
-import static com.example.zenitka.taskmanager.helpers.Errors.CODE_OK;
-import static com.example.zenitka.taskmanager.helpers.Errors.ERRORS;
+import static com.example.zenitka.teamcommander.helpers.Errors.CODE_OK;
+import static com.example.zenitka.teamcommander.helpers.Errors.ERRORS;
 
-import com.example.zenitka.taskmanager.TaskList;
-import com.example.zenitka.taskmanager.R;
+import com.example.zenitka.teamcommander.TaskList;
+import com.example.zenitka.teamcommander.R;
 
 public class LoginActivity extends AppCompatActivity {
 

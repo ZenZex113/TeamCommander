@@ -146,12 +146,6 @@ public class TeamList extends AppCompatActivity implements TeamAdapter.ItemClick
             finish();
         } else if (id == R.id.nav_list_of_teams) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
         } else if (id == R.id.nav_login) {
             Intent lintent = new Intent(TeamList.this, LoginActivity.class);
             startActivity(lintent);

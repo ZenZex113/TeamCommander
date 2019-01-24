@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#0f6bab"
     tools:context=".ProjectEdit">
 
     <RelativeLayout
@@ -26,7 +27,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="16dp"
-            app:backgroundTint="@color/colorAccent"
+            app:backgroundTint="#fdc80e"
             app:srcCompat="@drawable/ic_add_black_24dp" />
 
         <android.support.design.widget.FloatingActionButton
@@ -46,7 +47,7 @@
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="140dp"
-        android:background="@color/colorPrimary"
+        android:background="#fdc80e"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:menu="@menu/list_toolbar"
@@ -63,7 +64,7 @@
                 android:layout_below="@+id/name_edit"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="10dp"
-                android:textColor="#ffffff"
+                android:textColor="#111111"
                 android:text="TextView" />
 
             <ImageButton android:id="@+id/timeButton"
@@ -89,7 +90,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Название"
-                android:textColor="#ffffff"
+                android:maxLength="25"
+                android:maxLines="1"
+                android:textColor="#111111"
                 android:textSize="36dp"
                 android:layout_centerVertical="true"/>
 
@@ -113,6 +116,15 @@
                 android:layout_marginEnd="15dp"
                 android:onClick="onSaveProjectEditClick"
                 android:background="@drawable/ic_save_black_24dp" />
+
+            <TextView
+                android:id="@+id/teamName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/back"
+                android:layout_above="@id/name_edit"
+                android:textSize="16sp"
+                android:text="TextView" />
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 

@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager.net;
+package com.example.zenitka.teamcommander.net;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

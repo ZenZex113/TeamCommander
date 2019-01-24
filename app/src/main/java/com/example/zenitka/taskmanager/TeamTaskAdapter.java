@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager;
+package com.example.zenitka.teamcommander;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

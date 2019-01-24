@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager;
+package com.example.zenitka.teamcommander;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -20,7 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.zenitka.taskmanager.RegLog.LoginActivity;
+import com.example.zenitka.teamcommander.RegLog.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,12 +134,6 @@ public class TaskList extends AppCompatActivity implements TaskAdapter.ItemClick
         } else if (id == R.id.nav_list_of_teams) {
             Intent lintent = new Intent(TaskList.this, TeamList.class);
             startActivity(lintent);
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_login) {
             Intent lintent = new Intent(TaskList.this, LoginActivity.class);

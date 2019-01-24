@@ -4,7 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegLog.LoginActivity">
+    tools:context=".RegLog.LoginActivity"
+    android:background="@drawable/wallpaper">
+
+    <View
+        android:layout_width="300dp"
+        android:layout_height="250dp"
+        android:background="#ddffffff"
+        android:layout_centerInParent="true"
+        />
+
+    <Button
+        android:id="@+id/sign_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password_l"
+        android:layout_centerHorizontal="true"
+        android:text="Войти"/>
+
+    <TextView
+        android:id="@+id/register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sign_up"
+        android:layout_centerHorizontal="true"
+        android:textColor="#1E90FF"
+        android:text="Зарегистрироваться"
+        android:textSize="16sp"
+        android:onClick="onLoginBackClick"/>
 
 
     <android.support.design.widget.TextInputLayout
@@ -39,23 +66,6 @@
             android:hint="Никнейм" />
     </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:id="@+id/sign_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/password_l"
-        android:layout_centerHorizontal="true"
-        android:text="Войти"/>
-
-    <TextView
-        android:id="@+id/register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/sign_up"
-        android:layout_centerHorizontal="true"
-        android:textColor="#1E90FF"
-        android:text="Зарегистрироваться"
-        android:onClick="onLoginBackClick"/>
 
     <ImageButton
         android:id="@+id/button"

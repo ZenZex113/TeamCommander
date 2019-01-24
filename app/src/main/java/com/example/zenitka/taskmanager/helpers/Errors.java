@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager.helpers;
+package com.example.zenitka.teamcommander.helpers;
 
 public class Errors {
     public static final byte CODE_OK = 0;

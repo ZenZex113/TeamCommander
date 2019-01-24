@@ -158,6 +158,10 @@ public class ProjectEdit extends AppCompatActivity implements TeamTaskAdapter.It
         setContentView(R.layout.activity_project_edit);
         tintent = getIntent();
 
+        Team team = tintent.getParcelableExtra("parent");
+        TextView teamName = findViewById(R.id.teamName);
+        teamName.setText(team.name);
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -291,6 +295,8 @@ public class ProjectEdit extends AppCompatActivity implements TeamTaskAdapter.It
         }
         project.date = date_edit.getText().toString();
         project.name = name_edit.getText().toString();
+        Team team = tintent.getParcelableExtra("parent");
+        project.parentUID = team.UID;
         project.parentUID = Integer.parseInt(tintent.getStringExtra("parentUID"));
         project.team_id = Integer.parseInt(tintent.getStringExtra("team_id"));
         project.info = " Info ";    //TODO

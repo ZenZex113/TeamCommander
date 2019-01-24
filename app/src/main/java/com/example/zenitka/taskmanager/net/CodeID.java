@@ -1,5 +1,5 @@
 
-package com.example.zenitka.taskmanager.net;
+package com.example.zenitka.teamcommander.net;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

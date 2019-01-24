@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager.net;
+package com.example.zenitka.teamcommander.net;
 
 public class NameSurnameLoginPassword {
     public final String name, surname, login, password;

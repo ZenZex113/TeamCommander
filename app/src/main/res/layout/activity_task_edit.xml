@@ -5,15 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/edittextbackground"
     tools:context=".TaskEdit">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#0f6bab"
         android:layout_marginTop="?attr/actionBarSize">
 
         <TextView
             android:id="@+id/name"
+            android:textColor="@color/textColor"
             android:layout_width="wrap_content"
             android:layout_marginStart="10dp"
             android:textSize="22sp"
@@ -23,6 +24,7 @@
 
         <TextView
             android:id="@+id/date"
+            android:textColor="@color/textColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -34,6 +36,7 @@
 
         <TextView
             android:id="@+id/status"
+            android:textColor="@color/textColor"
             android:layout_width="wrap_content"
             android:layout_marginStart="10dp"
             android:textSize="22sp"
@@ -44,6 +47,7 @@
 
         <TextView
             android:id="@+id/priority"
+            android:textColor="@color/textColor"
             android:layout_width="wrap_content"
             android:layout_marginStart="10dp"
             android:textSize="22sp"
@@ -54,6 +58,7 @@
 
         <TextView
             android:id="@+id/description"
+            android:textColor="@color/textColor"
             android:layout_width="wrap_content"
             android:layout_marginStart="10dp"
             android:textSize="22sp"
@@ -65,14 +70,15 @@
 
         <EditText
             android:id="@+id/description_edit"
+            android:textColor="@color/textColor"
             android:layout_below="@+id/description"
             android:layout_alignParentStart="true"
             android:inputType="" android:textSize="14sp"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="7dp"
+            android:maxLength="250"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="40dp"
-            android:background="@color/edittextbackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -85,6 +91,7 @@
 
             <RadioButton
                 android:id="@+id/status_not_started"
+                android:textColor="@color/textColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -93,6 +100,7 @@
 
             <RadioButton
                 android:id="@+id/status_in_progress"
+                android:textColor="@color/textColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -101,6 +109,7 @@
 
             <RadioButton
                 android:id="@+id/status_complete"
+                android:textColor="@color/textColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -118,6 +127,7 @@
 
             <RadioButton
                 android:id="@+id/priority_high"
+                android:textColor="@color/textColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -126,6 +136,7 @@
 
             <RadioButton
                 android:id="@+id/priority_medium"
+                android:textColor="@color/textColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -134,6 +145,7 @@
 
             <RadioButton
                 android:id="@+id/priority_low"
+                android:textColor="@color/textColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -150,7 +162,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:id="@+id/name_edit_layout"
-            android:text="TextView"
+            android:textColor="@color/textColor"
             app:errorEnabled="true"
             android:textSize="14sp">
 
@@ -158,11 +170,17 @@
                 android:id="@+id/name_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Название" />
+                android:textColor="@color/textColor"
+                android:maxLines="1"
+                android:maxLength="30"
+                android:hint="Название"
+                android:textColorHint="@color/textColor"
+                app:errorEnabled="true"/>
         </android.support.design.widget.TextInputLayout>
 
         <TextView
             android:id="@+id/date_edit"
+            android:textColor="@color/textColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/date"
@@ -196,7 +214,7 @@
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/list_background"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:menu="@menu/list_toolbar"

@@ -1,4 +1,4 @@
-package com.example.zenitka.taskmanager;
+package com.example.zenitka.teamcommander;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;

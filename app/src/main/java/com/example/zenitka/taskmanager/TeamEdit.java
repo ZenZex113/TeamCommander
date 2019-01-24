@@ -176,6 +176,7 @@ public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemCl
                 Team team = new Team((Team) intent.getParcelableExtra("team"));
                 pintent.putExtra("parentUID", "" + team.UID);
                 pintent.putExtra("team_id", "" + team.id);
+                pintent.putExtra("parent", team);
                 startActivityForResult(pintent, NEW_TEAM_ACTIVITY_REQUEST_CODE);
             }
         });
@@ -208,6 +209,7 @@ public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemCl
         Team team = new Team((Team) intent.getParcelableExtra("team"));
         pintent.putExtra("parentUID", "" + team.UID);
         pintent.putExtra("team_id", "" + team.id);
+        pintent.putExtra("parent", team);
         startActivityForResult(pintent, UPDATE_WORD_ACTIVITY_REQUEST_CODE);
     }
 
