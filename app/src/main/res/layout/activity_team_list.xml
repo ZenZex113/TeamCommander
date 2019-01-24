@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#0f6bab"
     tools:context=".TeamList">
 
     <android.support.design.widget.CoordinatorLayout
@@ -31,7 +32,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="16dp"
                 android:layout_marginEnd="16dp"
-                app:backgroundTint="@color/colorAccent"
+                app:backgroundTint="#fdc80e"
                 app:srcCompat="@drawable/ic_add_black_24dp" />
 
         </RelativeLayout>
@@ -44,11 +45,20 @@
                 android:id="@+id/my_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"
+                android:background="#fdc80e"
                 android:elevation="4dp"
                 android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
                 app:menu="@menu/list_toolbar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                <TextView
+                    android:id="@+id/Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textSize="32sp"
+                    android:textColor="#111111"
+                    android:text="Список команд"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -66,6 +76,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        android:background="#0f6bab"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
 
