@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.example.zenitka.taskmanager.net.Code;
 import com.example.zenitka.taskmanager.net.CodeID;
+import com.example.zenitka.taskmanager.net.CodeListProject;
+import com.example.zenitka.taskmanager.net.CodeListTeam;
 import com.example.zenitka.taskmanager.net.HelloApi;
 import com.example.zenitka.taskmanager.net.NameDescription;
 import com.example.zenitka.taskmanager.net.Network;
@@ -96,6 +98,35 @@ public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemCl
                 });
     }
 
+    @SuppressLint("CheckResult")
+    public void loadProjectsList(String token, int team_id) {
+        api.loadProjectsList(token, team_id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<CodeListProject>() {
+                    @Override
+                    public void accept(CodeListProject projectsCode) throws Exception {
+                        if (projectsCode.getCode() == CODE_OK) {
+                            mProjectViewModel.deleteAll();
+                            for (Project project : projectsCode.getResponse()) {
+                                project.parentUID = GLteam.UID;
+                                System.err.println(project.name);
+                                System.err.println(mProjectViewModel);
+                                mProjectViewModel.insert(project);
+                            }
+                        } else {
+                            Toast.makeText(TeamEdit.this, ERRORS[projectsCode.getCode()], Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        System.err.println(throwable.getMessage());
+                        Toast.makeText(TeamEdit.this, "Out of internet!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+
     List<Project> projects = new ArrayList<>();
     ProjectAdapter adapter;
 
@@ -105,6 +136,8 @@ public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemCl
     public static final int UPDATE_WORD_ACTIVITY_REQUEST_CODE = 2;
     public static final String EXTRA_REPLY = "com.example.zenitka.taskmanager.REPLY";
 
+    Team GLteam;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,25 +145,6 @@ public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemCl
 
         intent = getIntent();
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent pintent = new Intent(TeamEdit.this, ProjectEdit.class);
-                pintent.putExtra("requestcode", "insert");
-                Team team = new Team((Team) intent.getParcelableExtra("team"));
-                pintent.putExtra("parentUID", "" + team.UID);
-                startActivityForResult(pintent, NEW_TEAM_ACTIVITY_REQUEST_CODE);
-            }
-        });
-        if (intent.getStringExtra("requestcode").equals("update")) {
-            Team task_old = new Team((Team) intent.getParcelableExtra("team"));
-            EditText name_edit = findViewById(R.id.name_edit);
-            name_edit.setText(task_old.name);
-        }
-        else {
-            fab.hide();
-        }
         setInitialData();
         RecyclerView recyclerView = findViewById(R.id.projectsrv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -140,9 +154,10 @@ public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemCl
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mProjectViewModel = ViewModelProviders.of(this).get(ProjectViewModel.class);
+
         if(intent.getStringExtra("requestcode").equals("update")) {
-            Team team = new Team((Team) intent.getParcelableExtra("team"));
-            mProjectViewModel.getTeamProjects(team.UID).observe(this, new Observer<List<Project>>() {
+            GLteam = new Team((Team) intent.getParcelableExtra("team"));
+            mProjectViewModel.getTeamProjects(GLteam.UID).observe(this, new Observer<List<Project>>() {
                 @Override
                 public void onChanged(@Nullable final List<Project> projects) {
                     adapter.setProjects(projects);
@@ -150,6 +165,36 @@ public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemCl
             });
         }
         adapter.mProjectViewModel = mProjectViewModel;
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab_update = findViewById(R.id.fab_update);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent pintent = new Intent(TeamEdit.this, ProjectEdit.class);
+                pintent.putExtra("requestcode", "insert");
+                Team team = new Team((Team) intent.getParcelableExtra("team"));
+                pintent.putExtra("parentUID", "" + team.UID);
+                pintent.putExtra("team_id", "" + team.id);
+                startActivityForResult(pintent, NEW_TEAM_ACTIVITY_REQUEST_CODE);
+            }
+        });
+        if (intent.getStringExtra("requestcode").equals("update")) {
+            final Team task_old = new Team((Team) intent.getParcelableExtra("team"));
+            EditText name_edit = findViewById(R.id.name_edit);
+            name_edit.setText(task_old.name);
+            fab_update.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mSharedPreferences = getSharedPreferences("com.example.zenitka.taskmanager.token", MODE_PRIVATE);
+                    loadProjectsList(mSharedPreferences.getString(SAVED_TOKEN, "No token"), task_old.id);
+                }
+            });
+        }
+        else {
+            fab.hide();
+            fab_update.hide();
+        }
     }
 
     private void setInitialData() {
@@ -162,6 +207,7 @@ public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemCl
         pintent.putExtra("requestcode", "update");
         Team team = new Team((Team) intent.getParcelableExtra("team"));
         pintent.putExtra("parentUID", "" + team.UID);
+        pintent.putExtra("team_id", "" + team.id);
         startActivityForResult(pintent, UPDATE_WORD_ACTIVITY_REQUEST_CODE);
     }
 
@@ -170,6 +216,7 @@ public class TeamEdit extends AppCompatActivity implements ProjectAdapter.ItemCl
 
         if (resultCode == RESULT_OK) {
             Project project = new Project((Project) (data.getParcelableExtra(ProjectEdit.EXTRA_REPLY)));
+            System.err.println(mProjectViewModel);
             mProjectViewModel.insert(project);
         }
     }

@@ -23,33 +23,41 @@ public class Project implements Parcelable {
     @ColumnInfo(name = "date")
     String date;
 
-    @ColumnInfo(name = "date_ms")
-    Long date_ms;
-
     @ColumnInfo(name = "parentUID")
     public int parentUID;
+
+    @ColumnInfo(name = "team_id")
+    public Integer team_id;
+
+    @ColumnInfo(name = "info")
+    public String info;
+
+    @ColumnInfo(name = "id")
+    @NonNull
+    public Integer id;
 
     Project() {
 
     }
+
     Project(Project project) {
         this.name = project.name;
         this.date = project.date;
-        this.date_ms = project.date_ms;
         this.UID = project.UID;
         this.parentUID = project.parentUID;
+        this.info = project.info;
+        this.team_id = project.team_id;
+        this.id = project.id;
     }
 
     protected Project(Parcel in) {
         UID = in.readInt();
         name = in.readString();
         date = in.readString();
-        if (in.readByte() == 0) {
-            date_ms = null;
-        } else {
-            date_ms = in.readLong();
-        }
         parentUID = in.readInt();
+        info = in.readString();
+        team_id = in.readInt();
+        id = in.readInt();
     }
 
     @Override
@@ -57,13 +65,10 @@ public class Project implements Parcelable {
         dest.writeInt(UID);
         dest.writeString(name);
         dest.writeString(date);
-        if (date_ms == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeLong(date_ms);
-        }
         dest.writeInt(parentUID);
+        dest.writeString(info);
+        dest.writeInt(team_id);
+        dest.writeInt(id);
     }
 
     @Override
@@ -71,7 +76,7 @@ public class Project implements Parcelable {
         return 0;
     }
 
-    public static final Creator<Project> CREATOR = new Creator<Project>() {
+    public static final Parcelable.Creator<Project> CREATOR = new Parcelable.Creator<Project>() {
         @Override
         public Project createFromParcel(Parcel in) {
             return new Project(in);

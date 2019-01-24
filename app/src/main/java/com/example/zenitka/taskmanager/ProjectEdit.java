@@ -1,10 +1,12 @@
 package com.example.zenitka.taskmanager;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -21,11 +23,28 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+import com.example.zenitka.taskmanager.net.Code;
+import com.example.zenitka.taskmanager.net.CodeID;
+import com.example.zenitka.taskmanager.net.CodeListProject;
+import com.example.zenitka.taskmanager.net.CodeListTask;
+import com.example.zenitka.taskmanager.net.CodeListTeam;
+import com.example.zenitka.taskmanager.net.HelloApi;
+import com.example.zenitka.taskmanager.net.NameDateTeamIDInfo;
+import com.example.zenitka.taskmanager.net.Network;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+
+import static com.example.zenitka.taskmanager.RegLog.LoginActivity.SAVED_TOKEN;
+import static com.example.zenitka.taskmanager.helpers.Errors.CODE_OK;
+import static com.example.zenitka.taskmanager.helpers.Errors.ERRORS;
 
 
 public class ProjectEdit extends AppCompatActivity implements TeamTaskAdapter.ItemClickListener {
@@ -35,6 +54,93 @@ public class ProjectEdit extends AppCompatActivity implements TeamTaskAdapter.It
     List<TeamTask> ttasks = new ArrayList<>();
     Project project = new Project();
     TeamTaskAdapter adapter;
+
+    SharedPreferences mSharedPreferences;
+
+    HelloApi api = Network.getInstance().getApi();
+
+    //.observeOn(AndroidSchedulers.mainThread())
+
+    @SuppressLint("CheckResult")
+    public void createProject(NameDateTeamIDInfo nameDateTeamIDInfo, final Project toPut, final Intent intent) {
+        api.createProject(nameDateTeamIDInfo)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<CodeID>() {
+                    @Override
+                    public void accept(CodeID codeID) throws Exception {
+                        System.out.println("Accepting...");
+                        if (codeID.getCode() == CODE_OK) {
+                            Toast.makeText(ProjectEdit.this, codeID.getID().toString(), Toast.LENGTH_SHORT).show();
+                            toPut.id = codeID.getID();
+                            intent.putExtra(EXTRA_REPLY, toPut);
+                            setResult(RESULT_OK, intent);
+                            System.out.println(toPut.id);
+                            finish();
+                        } else {
+                            Toast.makeText(ProjectEdit.this, ERRORS[codeID.getCode()], Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        System.err.println(throwable.getMessage());
+                        Toast.makeText(ProjectEdit.this, "Out of Internet!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    @SuppressLint("CheckResult")
+    public void updateProject(Project project) {
+        api.updateProject(project)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Code>() {
+                    @Override
+                    public void accept(Code code) throws Exception {
+                        System.out.println("Accepting...");
+                        if (code.getCode() == CODE_OK) {
+                            finish();
+                        } else {
+                            Toast.makeText(ProjectEdit.this, ERRORS[code.getCode()], Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        System.err.println(throwable.getMessage());
+                        Toast.makeText(ProjectEdit.this, "Out of Internet!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    @SuppressLint("CheckResult")
+    public void loadTasksList(String token, int project_id) {
+        api.loadTasksList(token, project_id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<CodeListTask>() {
+                    @Override
+                    public void accept(CodeListTask tasksCode) throws Exception {
+                        if (tasksCode.getCode() == CODE_OK) {
+                            mTeamTaskViewModel.deleteAll();
+                            for (TeamTask ttask : tasksCode.getResponse()) {
+                                ttask.parentUID = GLProject.UID;
+                                System.err.println(project.name);
+                                System.err.println(mTeamTaskViewModel);
+                                mTeamTaskViewModel.insert(ttask);
+                            }
+                        } else {
+                            Toast.makeText(ProjectEdit.this, ERRORS[tasksCode.getCode()], Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        System.err.println(throwable.getMessage());
+                        Toast.makeText(ProjectEdit.this, "Out of internet!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    Project GLProject;
 
     TextView currentDateTime;
     Calendar dateAndTime = Calendar.getInstance();
@@ -59,17 +165,28 @@ public class ProjectEdit extends AppCompatActivity implements TeamTaskAdapter.It
                 ttintent = new Intent(ProjectEdit.this, TeamTaskEdit.class);
                 Project project = new Project((Project) tintent.getParcelableExtra("project"));
                 ttintent.putExtra("parentUID", "" + project.UID);
+                ttintent.putExtra("project_id", "" + project.id);
                 ttintent.putExtra("requestcode", "insert");
                 startActivityForResult(ttintent, NEW_TEAM_TASK_ACTIVITY_REQUEST_CODE);
             }
         });
 
+        FloatingActionButton fab_update = findViewById(R.id.fab_update);
+
         if(tintent.getStringExtra("requestcode").equals("update")) {
-            Project project_old = new Project((Project) tintent.getParcelableExtra("project"));
+            final Project project_old = new Project((Project) tintent.getParcelableExtra("project"));
             EditText name_edit = findViewById(R.id.name_edit);
             name_edit.setText(project_old.name);
+            fab_update.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mSharedPreferences = getSharedPreferences("com.example.zenitka.taskmanager.token", MODE_PRIVATE);
+                    loadTasksList(mSharedPreferences.getString(SAVED_TOKEN, "No token"), project_old.id);
+                }
+            });
         } else {
             fab.hide();
+            fab_update.hide();
         }
         setInitialData();
         RecyclerView recyclerView = findViewById(R.id.teamtaskrv);
@@ -81,8 +198,8 @@ public class ProjectEdit extends AppCompatActivity implements TeamTaskAdapter.It
 
         mTeamTaskViewModel = ViewModelProviders.of(this).get(TeamTaskViewModel.class);
         if(tintent.getStringExtra("requestcode").equals("update")) {
-            Project project = new Project((Project) tintent.getParcelableExtra("project"));
-            mTeamTaskViewModel.getProjectTeamTasks(project.UID).observe(this, new Observer<List<TeamTask>>() {
+            GLProject = new Project((Project) tintent.getParcelableExtra("project"));
+            mTeamTaskViewModel.getProjectTeamTasks(GLProject.UID).observe(this, new Observer<List<TeamTask>>() {
                 @Override
                 public void onChanged(@Nullable final List<TeamTask> ttasks) {
                     adapter.setTeamTasks(ttasks);
@@ -145,6 +262,7 @@ public class ProjectEdit extends AppCompatActivity implements TeamTaskAdapter.It
         ttintent.putExtra("teamtask", adapter.getTeamTask(position));
         Project project = new Project((Project) tintent.getParcelableExtra("project"));
         ttintent.putExtra("parentUID", "" + project.UID);
+        ttintent.putExtra("project_id", "" + project.id);
         ttintent.putExtra("requestcode", "update");
         startActivityForResult(ttintent, UPDATE_TEAM_TASK_ACTIVITY_REQUEST_CODE);
     }
@@ -169,16 +287,25 @@ public class ProjectEdit extends AppCompatActivity implements TeamTaskAdapter.It
         if(tintent.getStringExtra("requestcode").equals("update")) {
             Project project_old = new Project((Project) tintent.getParcelableExtra("project"));
             project.UID = project_old.UID;
+            project.id = project_old.id;
         }
         project.date = date_edit.getText().toString();
         project.name = name_edit.getText().toString();
         project.parentUID = Integer.parseInt(tintent.getStringExtra("parentUID"));
+        project.team_id = Integer.parseInt(tintent.getStringExtra("team_id"));
+        project.info = " Info ";    //TODO
         if(TextUtils.isEmpty(name_edit.getText())) {
             setResult(RESULT_CANCELED,tintent);
         } else {
-            tintent.putExtra(EXTRA_REPLY, project);
-            setResult(RESULT_OK, tintent);
-            finish();
+            if (tintent.getStringExtra("requestcode").equals("update")) {
+                updateProject(project);
+            } else {
+                mSharedPreferences = getSharedPreferences("com.example.zenitka.taskmanager.token", MODE_PRIVATE);
+                createProject(new NameDateTeamIDInfo(mSharedPreferences.getString(SAVED_TOKEN, "No token"), project.name, project.date, project.team_id, project.info), project, tintent);
+            }
+            //            tintent.putExtra(EXTRA_REPLY, project);
+//            setResult(RESULT_OK, tintent);
+//            finish();
         }
 
     }

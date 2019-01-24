@@ -32,4 +32,6 @@ public class ProjectViewModel extends AndroidViewModel {
     public LiveData<List<Project>> getTeamProjects(int parentUID) {
         return mRepository.getTeamProjects(parentUID);
     }
+
+    public void deleteAll() { mRepository.deleteAll();}
 }

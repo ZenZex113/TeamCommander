@@ -32,8 +32,23 @@ public class Task implements Parcelable {
     @ColumnInfo(name = "priority")
     int priority = 0;
 
-    @ColumnInfo(name = "desc")
-    String desc = "";
+    @ColumnInfo(name = "description")
+    String description = "";
+
+    @ColumnInfo(name = "id")
+    int id;
+
+    @ColumnInfo(name = "project_id")
+    int project_id;
+
+    @ColumnInfo(name = "executor_id")
+    int executor_id = 0;
+
+    @ColumnInfo(name = "watcher_id")
+    int watcher_id = 0;
+
+    @ColumnInfo(name = "deadline")
+    int deadline = 0;
 
     Task() {
 
@@ -44,8 +59,13 @@ public class Task implements Parcelable {
         this.date_ms = task.date_ms;
         this.status = task.status;
         this.priority = task.priority;
-        this.desc = task.desc;
+        this.description = task.description;
         this.UID = task.UID;
+        this.id = task.id;
+        this.project_id = task.project_id;
+        this.executor_id = task.executor_id;
+        this.watcher_id = task.watcher_id;
+        this.deadline = task.deadline;
     }
 
     protected Task(Parcel in) {
@@ -59,7 +79,12 @@ public class Task implements Parcelable {
         }
         status = in.readInt();
         priority = in.readInt();
-        desc = in.readString();
+        description = in.readString();
+        id = in.readInt();
+        project_id = in.readInt();
+        executor_id = in.readInt();
+        watcher_id = in.readInt();
+        deadline = in.readInt();
     }
 
     @Override
@@ -75,7 +100,12 @@ public class Task implements Parcelable {
         }
         dest.writeInt(status);
         dest.writeInt(priority);
-        dest.writeString(desc);
+        dest.writeString(description);
+        dest.writeInt(id);
+        dest.writeInt(project_id);
+        dest.writeInt(executor_id);
+        dest.writeInt(watcher_id);
+        dest.writeInt(deadline);
     }
 
     @Override
@@ -83,7 +113,7 @@ public class Task implements Parcelable {
         return 0;
     }
 
-    public static final Creator<Task> CREATOR = new Creator<Task>() {
+    public static final Parcelable.Creator<Task> CREATOR = new Parcelable.Creator<Task>() {
         @Override
         public Task createFromParcel(Parcel in) {
             return new Task(in);

@@ -1,8 +1,10 @@
 package com.example.zenitka.taskmanager;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -15,19 +17,95 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+import com.example.zenitka.taskmanager.net.Code;
+import com.example.zenitka.taskmanager.net.CodeID;
+import com.example.zenitka.taskmanager.net.HelloApi;
+import com.example.zenitka.taskmanager.net.NameDateTeamIDInfo;
+import com.example.zenitka.taskmanager.net.Network;
 
 import java.util.Calendar;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+
+import static com.example.zenitka.taskmanager.RegLog.LoginActivity.SAVED_TOKEN;
+import static com.example.zenitka.taskmanager.helpers.Errors.CODE_OK;
+import static com.example.zenitka.taskmanager.helpers.Errors.ERRORS;
 
 public class TeamTaskEdit extends AppCompatActivity {
 
     public static final String EXTRA_REPLY = "com.example.zenitka.taskmanager.REPLY";
 
+    public int parent_UID_true = -1;
+
     TeamTask ttask = new TeamTask();
 
     Intent intent;
 
+    SharedPreferences mSharedPreferences;
+
+    HelloApi api = Network.getInstance().getApi();
+
+    //.observeOn(AndroidSchedulers.mainThread())
+
+    @SuppressLint("CheckResult")
+    public void createTeamTask(final TeamTask toPut) {
+        api.createTask(toPut)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<CodeID>() {
+                    @Override
+                    public void accept(CodeID codeID) throws Exception {
+                        System.out.println("Accepting...");
+                        if (codeID.getCode() == CODE_OK) {
+                            Toast.makeText(TeamTaskEdit.this, codeID.getID().toString(), Toast.LENGTH_SHORT).show();
+                            toPut.id = codeID.getID();
+                            toPut.parentUID = parent_UID_true;
+
+                            intent.putExtra(EXTRA_REPLY, toPut);
+                            setResult(RESULT_OK, intent);
+                            System.out.println(toPut.id);
+                            finish();
+                        } else {
+                            Toast.makeText(TeamTaskEdit.this, ERRORS[codeID.getCode()], Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        System.err.println(throwable.getMessage());
+                        Toast.makeText(TeamTaskEdit.this, "Out of Internet!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    @SuppressLint("CheckResult")
+    public void updateTeamTask(TeamTask teamTask) {
+        api.updateTeamTask(teamTask)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Code>() {
+                    @Override
+                    public void accept(Code code) throws Exception {
+                        System.out.println("Accepting...");
+                        if (code.getCode() == CODE_OK) {
+                            finish();
+                        } else {
+                            Toast.makeText(TeamTaskEdit.this, ERRORS[code.getCode()], Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        System.err.println(throwable.getMessage());
+                        Toast.makeText(TeamTaskEdit.this, "Out of Internet!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
     TextView currentDateTime;
     Calendar dateAndTime = Calendar.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +114,8 @@ public class TeamTaskEdit extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         intent = getIntent();
-        if(intent.getStringExtra("requestcode").equals("update")) {
+        parent_UID_true = Integer.parseInt(intent.getStringExtra("parentUID"));
+        if (intent.getStringExtra("requestcode").equals("update")) {
             TeamTask ttask_edit = new TeamTask((TeamTask) intent.getParcelableExtra("teamtask"));
             TextInputEditText name_edit = findViewById(R.id.name_edit);
             EditText desc_edit = findViewById(R.id.description_edit);
@@ -107,7 +186,7 @@ public class TeamTaskEdit extends AppCompatActivity {
         ttask.tdate_ms = dateAndTime.getTimeInMillis();
     }
 
-    TimePickerDialog.OnTimeSetListener t=new TimePickerDialog.OnTimeSetListener() {
+    TimePickerDialog.OnTimeSetListener t = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             dateAndTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
             dateAndTime.set(Calendar.MINUTE, minute);
@@ -115,7 +194,7 @@ public class TeamTaskEdit extends AppCompatActivity {
         }
     };
 
-    DatePickerDialog.OnDateSetListener d=new DatePickerDialog.OnDateSetListener() {
+    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             dateAndTime.set(Calendar.YEAR, year);
             dateAndTime.set(Calendar.MONTH, monthOfYear);
@@ -130,14 +209,16 @@ public class TeamTaskEdit extends AppCompatActivity {
         EditText worker_edit = findViewById(R.id.worker_edit);
         TextView date_edit = findViewById(R.id.date_edit);
         intent = getIntent();
-        if(intent.getStringExtra("requestcode").equals("update")) {
+        if (intent.getStringExtra("requestcode").equals("update")) {
             TeamTask teamtask = new TeamTask((TeamTask) intent.getParcelableExtra("teamtask"));
             ttask.TUID = teamtask.TUID;
+            ttask.id = teamtask.id;
         }
         ttask.tdesc = desc_edit.getText().toString();
         ttask.tdate = date_edit.getText().toString();
         ttask.tname = name_edit.getText().toString();
         ttask.worker = worker_edit.getText().toString();
+
         RadioButton status_not_started = findViewById(R.id.status_not_started);
         RadioButton status_in_progress = findViewById(R.id.status_in_progress);
         RadioButton status_complete = findViewById(R.id.status_complete);
@@ -145,29 +226,41 @@ public class TeamTaskEdit extends AppCompatActivity {
         RadioButton priority_medium = findViewById(R.id.priority_medium);
         RadioButton priority_high = findViewById(R.id.priority_high);
 
-        if(status_not_started.isChecked())
+        if (status_not_started.isChecked())
             ttask.tstatus = 1;
-        else if(status_in_progress.isChecked())
+        else if (status_in_progress.isChecked())
             ttask.tstatus = 2;
-        else if(status_complete.isChecked())
+        else if (status_complete.isChecked())
             ttask.tstatus = 3;
         else
             ttask.tstatus = 0;
-        if(priority_low.isChecked())
+        if (priority_low.isChecked())
             ttask.tpriority = 1;
-        else if(priority_medium.isChecked())
+        else if (priority_medium.isChecked())
             ttask.tpriority = 2;
-        else if(priority_high.isChecked())
+        else if (priority_high.isChecked())
             ttask.tpriority = 3;
         else
             ttask.tpriority = 0;
         ttask.parentUID = Integer.parseInt(intent.getStringExtra("parentUID"));
-        if(TextUtils.isEmpty(name_edit.getText())) {
+        ttask.project_id = Integer.parseInt(intent.getStringExtra("project_id"));
+
+        ttask.watcher_id = 0;       //TODO
+        ttask.executor_id = 0;      //TODO
+        if (TextUtils.isEmpty(name_edit.getText())) {
             setResult(RESULT_CANCELED, intent);
         } else {
-            intent.putExtra(EXTRA_REPLY, ttask);
-            setResult(RESULT_OK, intent);
-            finish();
+            if (intent.getStringExtra("requestcode").equals("update")) {
+                updateTeamTask(ttask);
+            } else {
+                mSharedPreferences = getSharedPreferences("com.example.zenitka.taskmanager.token", MODE_PRIVATE);
+                ttask.token = mSharedPreferences.getString(SAVED_TOKEN, "No token");
+                createTeamTask(ttask);
+            }
+
+//            intent.putExtra(EXTRA_REPLY, ttask);
+//            setResult(RESULT_OK, intent);
+//            finish();
         }
     }
 }

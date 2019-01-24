@@ -44,4 +44,6 @@ public class TeamTaskViewModel extends AndroidViewModel {
     public void delete(TeamTask ttask) {
         mRepository.delete(ttask);
     }
+
+    public void deleteAll() { mRepository.deleteAll();}
 }

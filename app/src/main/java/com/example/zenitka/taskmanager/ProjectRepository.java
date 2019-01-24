@@ -31,6 +31,8 @@ public class ProjectRepository {
         return mProjectDao.getTeamProjects(parentUID);
     }
 
+    public void deleteAll() {new ProjectRepository.deleteAsyncAll(mProjectDao).execute(); }
+
     private static class insertAsyncTask extends AsyncTask<Project, Void, Void> {
 
         private ProjectDao mAsyncTaskDao;
@@ -57,6 +59,19 @@ public class ProjectRepository {
         @Override
         protected Void doInBackground(final Project... params) {
             mAsyncTaskDao.delete(params[0]);
+            return null;
+        }
+    }
+
+    private static class deleteAsyncAll extends AsyncTask<Void, Void, Void> {
+
+        private ProjectDao mAsyncTaskDao;
+
+        deleteAsyncAll(ProjectDao dao) {mAsyncTaskDao = dao;}
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mAsyncTaskDao.deleteAll();
             return null;
         }
     }

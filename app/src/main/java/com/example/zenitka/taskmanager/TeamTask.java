@@ -38,6 +38,21 @@ public class TeamTask implements Parcelable {
     @ColumnInfo(name = "parentUID")
     public int parentUID;
 
+    @ColumnInfo(name = "project_id")
+    public int project_id;
+
+    @ColumnInfo(name = "executor_id")
+    public int executor_id;
+
+    @ColumnInfo(name = "watcher_id")
+    public int watcher_id;
+
+    @ColumnInfo(name = "id")
+    public int id;
+
+    public String token;        //Shhhhh!
+
+
     TeamTask() {
     }
     TeamTask(TeamTask task) {
@@ -50,6 +65,10 @@ public class TeamTask implements Parcelable {
         this.TUID = task.TUID;
         this.worker = task.worker;
         this.parentUID = task.parentUID;
+        this.project_id = task.project_id;
+        this.executor_id = task.executor_id;
+        this.watcher_id = task.watcher_id;
+        this.id = task.id;
     }
 
     protected TeamTask(Parcel in) {
@@ -66,6 +85,10 @@ public class TeamTask implements Parcelable {
         tdesc = in.readString();
         worker = in.readString();
         parentUID = in.readInt();
+        project_id = in.readInt();
+        executor_id = in.readInt();
+        watcher_id = in.readInt();
+        id = in.readInt();
     }
 
     @Override
@@ -84,6 +107,10 @@ public class TeamTask implements Parcelable {
         dest.writeString(tdesc);
         dest.writeString(worker);
         dest.writeInt(parentUID);
+        dest.writeInt(project_id);
+        dest.writeInt(executor_id);
+        dest.writeInt(watcher_id);
+        dest.writeInt(id);
     }
 
     @Override

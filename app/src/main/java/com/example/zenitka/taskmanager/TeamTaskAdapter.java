@@ -1,6 +1,8 @@
 package com.example.zenitka.taskmanager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,14 +12,55 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.zenitka.taskmanager.net.Code;
+import com.example.zenitka.taskmanager.net.HelloApi;
+import com.example.zenitka.taskmanager.net.Network;
+import com.example.zenitka.taskmanager.net.TokenProject;
+import com.example.zenitka.taskmanager.net.TokenTask;
+
 import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+
+import static android.content.Context.MODE_PRIVATE;
+import static com.example.zenitka.taskmanager.RegLog.LoginActivity.SAVED_TOKEN;
+import static com.example.zenitka.taskmanager.helpers.Errors.CODE_OK;
 
 public class TeamTaskAdapter extends RecyclerView.Adapter<TeamTaskAdapter.ViewHolder>{
 
     public final static int ACTION_CLICK = 1;
 
+
+    SharedPreferences mSharedPreferences;
+
+    HelloApi api = Network.getInstance().getApi();
+
+    @SuppressLint("CheckResult")
+    public void deleteTask(TokenTask tokenTask) {
+        api.deleteTask(tokenTask)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Code>() {
+                    @Override
+                    public void accept(Code code) throws Exception {
+                        if (code.getCode() == CODE_OK) {
+                            ;;
+                        } else {
+                            System.err.println(code.getCode());
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        System.err.println(throwable.getMessage());
+                    }
+                });
+    }
+
     private List<TeamTask> ttasks;
     private ItemClickListener ClickListener;
+
+    private Context context;
 
     public TeamTaskViewModel mTeamTaskViewModel;
 
@@ -28,7 +71,7 @@ public class TeamTaskAdapter extends RecyclerView.Adapter<TeamTaskAdapter.ViewHo
     @NonNull
     @Override
     public TeamTaskAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
+        context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.team_task_list_item, parent, false);
         return new ViewHolder(view);
@@ -105,6 +148,11 @@ public class TeamTaskAdapter extends RecyclerView.Adapter<TeamTaskAdapter.ViewHo
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     TeamTask ttask = ttasks.get(position);
+
+                    mSharedPreferences = context.getSharedPreferences("com.example.zenitka.taskmanager.token", MODE_PRIVATE);
+
+                    deleteTask(new TokenTask(mSharedPreferences.getString(SAVED_TOKEN, "No token"), ttask.id));
+
                     mTeamTaskViewModel.delete(ttask);
                     ttasks.remove(position);
                     notifyItemRemoved(position);

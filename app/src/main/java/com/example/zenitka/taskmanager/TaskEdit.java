@@ -42,7 +42,7 @@ public class TaskEdit extends AppCompatActivity {
             TextView date_edit = findViewById(R.id.date_edit);
             name_edit.setText(task_edit.name);
             date_edit.setText(task_edit.date);
-            desc_edit.setText(task_edit.desc);
+            desc_edit.setText(task_edit.description);
             switch (task_edit.status) {
                 case 1:
                     RadioButton status_not_started = (RadioButton) findViewById(R.id.status_not_started);
@@ -130,8 +130,10 @@ public class TaskEdit extends AppCompatActivity {
         if(intent.getStringExtra("requestcode").equals("update")) {
             Task task_old = new Task((Task) intent.getParcelableExtra("task"));
             task.UID = task_old.UID;
+            task.id = task_old.id;
         }
-        task.desc = desc_edit.getText().toString();
+        task.project_id = Integer.parseInt(intent.getStringExtra("project_id"));
+        task.description = desc_edit.getText().toString();
         task.date = date_edit.getText().toString();
         task.name = name_edit.getText().toString();
         RadioButton status_not_started = findViewById(R.id.status_not_started);
@@ -157,6 +159,10 @@ public class TaskEdit extends AppCompatActivity {
             task.priority = 3;
         else
             task.priority = 0;
+        task.watcher_id = -1; //TODO
+        task.executor_id = -1; //TODO
+        task.id = -1; //TODO
+
         if(TextUtils.isEmpty(name_edit.getText())) {
             setResult(RESULT_CANCELED, intent);
         } else {
